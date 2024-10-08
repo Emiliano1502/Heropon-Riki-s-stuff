@@ -94,7 +94,7 @@ class Usuario {
         if (nuevaSuscripcion != Suscripcion.Basico) {
             System.out.println("Ingrese el número de su tarjeta:");
             String numeroTarjeta = scanner.nextLine();
-            System.out.println("Ingrese la fecha de expiración de su tarjeta de la siguiente forma: (MM/AA):");
+            System.out.println("Ingrese la fecha de expiración de su tarjeta de la siguiente forma: (MM/AAAA):");
             String fechaExpiracion = scanner.nextLine();
             System.out.println("Ingrese el CVV de su tarjeta:");
             String cvv = scanner.nextLine();
@@ -103,14 +103,14 @@ class Usuario {
             if (!validarDatosTarjeta(numeroTarjeta, fechaExpiracion, cvv)) {
                 System.out.println("Datos de tarjeta no válidos. Inténtelo nuevamente.");
                 return;
-								//Igual para evitar problemas con el buffer
+                                //Igual para evitar problemas con el buffer
             }
         }
 
         suscripcion = nuevaSuscripcion;
         System.out.println("Su suscripción ha sido actualizada a: " + suscripcion + ".");
     }
-    
+
     private boolean validarDatosTarjeta(String numeroTarjeta, String fechaExpiracion, String cvv) {
         // Comprueba que mida lo mismo que una tarjeta convencional, osea 16 digitos para la tarjeta y 3 para el cvv
         return numeroTarjeta.length() == 16 && cvv.length() == 3; 
@@ -153,7 +153,7 @@ public class Main {
                         System.out.println("Ingrese su nombre:");
                         nombre = scanner.nextLine(); //Se reutiliza la variable nombre
                         System.out.println("Ingrese su contraseña:"); //Igual se reutiliza contraseña
-                        contraseña = scanner.nextLine(); "
+                        contraseña = scanner.nextLine(); 
 
                         // Buscar usuario por nombre y contraseña
                         Usuario usuario = buscarUsuarioPorCredenciales(usuarios, nombre, contraseña);
@@ -192,7 +192,7 @@ public class Main {
                     scanner.nextLine(); // Limpiar buffer
                     Usuario.Usuarios tipoUsuario = opcionTipoUsuario == 1 ? Usuario.Usuarios.Estudiante : Usuario.Usuarios.Profesor;
 
-                    //Usuario Random, agrega U mas un numeri aleatorio para el numero de usuario
+                    //Usuario Random, agrega U mas un numero aleatorio para el numero de usuario
                     String id = "U" + System.currentTimeMillis();
 
                     Usuario nuevoUsuario = new Usuario(id, nombre, apellido, correo, contraseña, fechaNacimiento, sexo, tipoUsuario);
@@ -228,7 +228,8 @@ public class Main {
                         System.out.println("No hay ninguna cuenta creada. Cree una cuenta primero para poder suscribirse.");
                     } else {
                         System.out.println("Ingrese su nombre con el que se registro para mejorar su suscripción:");
-                        correo = scanner.nextLine();
+                      
+                        nombre = scanner.nextLine();
                         System.out.println("Ahora ingrese su contraseña:");
                         contraseña = scanner.nextLine();
 
