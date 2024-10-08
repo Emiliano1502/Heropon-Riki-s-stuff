@@ -1,0 +1,188 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Opciones {
+    public static final int INGRESAR_SISTEMA = 1;
+    public static final int CREAR_CUENTA = 2;
+    public static final int EDITAR_CUENTA = 3;
+    public static final int SALIR = 4;
+}
+
+class Usuario {
+    private String id;
+    private String contraseña;
+    private String correo;
+    private String nombre;
+    private String apellido;
+    private String fechaNacimiento;
+    private Sexo sexo;
+    enum Sexo {Hombre, Mujer, Noespecificar}
+    private Usuarios tipoUsuario;
+    enum Usuarios {Estudiante, Profesor}
+    private Suscripcion suscripcion;
+    enum Suscripcion {Basico, Medio, Premium}
+    private boolean sesionActiva;
+
+    // Constructor para crear un nuevo usuario
+    public Usuario(String id, String nombre, String apellido, String correo, String contraseña, String fechaNacimiento, Sexo sexo, Usuarios tipoUsuario, Suscripcion suscripcion) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.correo = correo;
+        this.contraseña = contraseña;
+        this.fechaNacimiento = fechaNacimiento;
+        this.sexo = sexo;
+        this.tipoUsuario = tipoUsuario;
+        this.suscripcion = suscripcion;
+        this.sesionActiva = false;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getContraseña() {
+        return contraseña;
+    }
+
+    public void crearCuenta() {
+        System.out.println("Cuenta creada exitosamente con los siguientes datos:");
+        mostrarDatos();
+    }
+
+    public void iniciarSesion(String nombre, String contraseña) {
+        if (this.nombre.equals(nombre) && this.contraseña.equals(contraseña)) {
+            sesionActiva = true;
+            System.out.println("Inicio de sesión exitoso.");
+            mostrarDatos();
+        } else {
+            System.out.println("Credenciales incorrectas. Inténtelo de nuevo.");
+        }
+    }
+
+    public void editarCuenta(String nuevoCorreo, String nuevaContraseña) {
+        this.correo = nuevoCorreo;
+        this.contraseña = nuevaContraseña;
+        System.out.println("Cuenta editada con éxito.");
+    }
+
+    public void mostrarDatos() {
+        System.out.println("ID: " + id);
+        System.out.println("Nombre: " + nombre + " " + apellido);
+        System.out.println("Correo: " + correo);
+        System.out.println("Fecha de Nacimiento: " + fechaNacimiento);
+        System.out.println("Sexo: " + sexo);
+        System.out.println("Tipo de Usuario: " + tipoUsuario);
+        System.out.println("Suscripción: " + suscripcion);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<Usuario> usuarios = new ArrayList<>(); // Lista para almacenar los usuarios
+
+        int opcion;
+        String nombre, contraseña; // Variables declaradas fuera del switch para reutilizarlas
+        do {
+            System.out.println("Seleccione una opción:");
+            System.out.println("1. Ingresar al sistema");
+            System.out.println("2. Crear cuenta");
+            System.out.println("3. Editar cuenta");
+            System.out.println("4. Salir");
+
+            opcion = scanner.nextInt();
+            scanner.nextLine(); // Limpiar buffer
+
+            switch (opcion) {
+                case Opciones.INGRESAR_SISTEMA:
+                    if (usuarios.isEmpty()) {
+                        System.out.println("No hay ninguna cuenta creada. Cree una cuenta primero.");
+                    } else {
+                        System.out.println("Ingrese su nombre:");
+                        nombre = scanner.nextLine(); // Reutilizamos la variable nombre
+                        System.out.println("Ingrese su contraseña:");
+                        contraseña = scanner.nextLine(); // Reutilizamos la variable contraseña
+
+                        // Buscar usuario por nombre y contraseña
+                        Usuario usuario = buscarUsuarioPorCredenciales(usuarios, nombre, contraseña);
+                        if (usuario != null) {
+                            usuario.iniciarSesion(nombre, contraseña);
+                        } else {
+                            System.out.println("Usuario no encontrado. Verifique sus credenciales.");
+                        }
+                    }
+                    break;
+
+                case Opciones.CREAR_CUENTA:
+                    System.out.println("Ingrese su nombre:");
+                    nombre = scanner.nextLine(); // Reutilizamos la variable nombre
+                    System.out.println("Ingrese su apellido:");
+                    String apellido = scanner.nextLine();
+                    System.out.println("Ingrese su correo:");
+                    String correo = scanner.nextLine();
+                    System.out.println("Ingrese su contraseña:");
+                    contraseña = scanner.nextLine(); // Reutilizamos la variable contraseña
+                    System.out.println("Ingrese su fecha de nacimiento (dd/mm/aaaa):");
+                    String fechaNacimiento = scanner.nextLine();
+                    System.out.println("Ingrese su sexo (Hombre, Mujer, Noespecificar):");
+                    Usuario.Sexo sexo = Usuario.Sexo.valueOf(scanner.nextLine());
+                    System.out.println("Ingrese su tipo de usuario (Estudiante, Profesor):");
+                    Usuario.Usuarios tipoUsuario = Usuario.Usuarios.valueOf(scanner.nextLine());
+                    System.out.println("Ingrese su tipo de suscripción (Basico, Medio, Premium):");
+                    Usuario.Suscripcion suscripcion = Usuario.Suscripcion.valueOf(scanner.nextLine());
+
+                    // Generar ID de usuario automáticamente (puede cambiarse según necesidades)
+                    String id = "U" + System.currentTimeMillis();
+
+                    Usuario nuevoUsuario = new Usuario(id, nombre, apellido, correo, contraseña, fechaNacimiento, sexo, tipoUsuario, suscripcion);
+                    usuarios.add(nuevoUsuario); // Agregar el nuevo usuario a la lista
+                    nuevoUsuario.crearCuenta();
+                    break;
+
+                case Opciones.EDITAR_CUENTA:
+                    if (usuarios.isEmpty()) {
+                        System.out.println("No hay ninguna cuenta creada. Cree una cuenta primero.");
+                    } else {
+                        System.out.println("Ingrese su nombre para editar la cuenta:");
+                        nombre = scanner.nextLine(); // Reutilizamos la variable nombre
+                        System.out.println("Ingrese su contraseña actual:");
+                        contraseña = scanner.nextLine(); // Reutilizamos la variable contraseña
+
+                        // Buscar usuario por nombre y contraseña
+                        Usuario usuario = buscarUsuarioPorCredenciales(usuarios, nombre, contraseña);
+                        if (usuario != null) {
+                            System.out.println("Ingrese su nuevo correo:");
+                            String nuevoCorreo = scanner.nextLine();
+                            System.out.println("Ingrese su nueva contraseña:");
+                            String nuevaContraseña = scanner.nextLine();
+                            usuario.editarCuenta(nuevoCorreo, nuevaContraseña);
+                        } else {
+                            System.out.println("Usuario no encontrado. Verifique sus credenciales.");
+                        }
+                    }
+                    break;
+
+                case Opciones.SALIR:
+                    System.out.println("Saliendo del sistema...");
+                    break;
+
+                default:
+                    System.out.println("Opción no válida. Intente nuevamente.");
+                    break;
+            }
+        } while (opcion != Opciones.SALIR);
+
+        scanner.close();
+    }
+
+    // Método auxiliar para buscar un usuario por nombre y contraseña
+    private static Usuario buscarUsuarioPorCredenciales(ArrayList<Usuario> usuarios, String nombre, String contraseña) {
+        for (Usuario usuario : usuarios) {
+            if (usuario.getNombre().equals(nombre) && usuario.getContraseña().equals(contraseña)) {
+                return usuario;
+            }
+        }
+        return null;
+    }
+}
