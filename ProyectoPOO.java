@@ -24,6 +24,39 @@ class Usuario {
     enum Suscripcion {Basico, Medio, Premium}
     private boolean sesionActiva;
 
+    class Tutor extends Usuario {
+    // Atributos
+    private String idTutor;
+    private String estudiantesAsignados;
+    private String especialidad;
+    private String disponibilidad;
+    private double calificacionTutor;
+    private double salario;
+
+    // Métodos
+    public void asignarEstudiante() { }
+    public void consultarProgreso() { }
+    public void agendarSesion() { }
+    public void agregarActividad() { }
+    public void modificarActividad() { }
+    public void editarActividad() { }
+}
+
+    class Administrador extends Usuario {
+    // Atributos
+    private String idAdmin;
+    private String especialidad;
+    private String verProgreso;
+    private String contacto;
+
+    // Métodos
+    public void consultarProgreso() { }
+    public void agregarActividad() { }
+    public void modificarActividad() { }
+    public void editarActividad() { }
+    public void verEstadisticas() { }
+}
+
     // Este es un usuario predeterminado 
     public Usuario(String id, String nombre, String apellido, String correo, String contraseña, String fechaNacimiento, Sexo sexo, Usuarios tipoUsuario) {
         this.id = id;
