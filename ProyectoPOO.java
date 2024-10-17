@@ -199,39 +199,53 @@ public class Main {
                     break;
 
                 case Opciones.CREAR_CUENTA:
-                    System.out.println("Ingrese su nombre:");
-                    nombre = scanner.nextLine(); // Reutilizamos la variable nombre
-                    System.out.println("Ingrese su apellido:");
-                    String apellido = scanner.nextLine();
-                    System.out.println("Ingrese su correo:");
-                    String correo = scanner.nextLine();
-                    System.out.println("Ingrese su contraseña:");
-                    contraseña = scanner.nextLine(); // Reutilizamos la variable contraseña
-                    System.out.println("Ingrese su fecha de nacimiento (dd/mm/aaaa):");
-                    String fechaNacimiento = scanner.nextLine();
+    System.out.println("Ingrese su nombre:");
+    nombre = scanner.nextLine();
+    System.out.println("Ingrese su apellido:");
+    String apellido = scanner.nextLine();
+    System.out.println("Ingrese su correo:");
+    String correo = scanner.nextLine();
+    System.out.println("Ingrese su contraseña:");
+    contraseña = scanner.nextLine();
+    System.out.println("Ingrese su fecha de nacimiento (dd/mm/aaaa):");
+    String fechaNacimiento = scanner.nextLine();
 
-                    System.out.println("Seleccione su sexo:");
-                    System.out.println("1. Hombre");
-                    System.out.println("2. Mujer");
-                    System.out.println("3. No especificar");
-                    int opcionSexo = scanner.nextInt();
-                    scanner.nextLine(); // Limpiar buffer
-                    Usuario.Sexo sexo = opcionSexo == 1 ? Usuario.Sexo.Hombre : (opcionSexo == 2 ? Usuario.Sexo.Mujer : Usuario.Sexo.NoEspecificar);
+    System.out.println("Seleccione su sexo:");
+    System.out.println("1. Hombre");
+    System.out.println("2. Mujer");
+    System.out.println("3. No especificar");
+    int opcionSexo = scanner.nextInt();
+    scanner.nextLine();
+    Usuario.Sexo sexo = opcionSexo == 1 ? Usuario.Sexo.Hombre : (opcionSexo == 2 ? Usuario.Sexo.Mujer : Usuario.Sexo.NoEspecificar);
 
-                    System.out.println("Seleccione su tipo de usuario:");
-                    System.out.println("1. Estudiante");
-                    System.out.println("2. Profesor");
-                    int opcionTipoUsuario = scanner.nextInt();
-                    scanner.nextLine(); // Limpiar buffer
-                    Usuario.Usuarios tipoUsuario = opcionTipoUsuario == 1 ? Usuario.Usuarios.Estudiante : Usuario.Usuarios.Profesor;
+    System.out.println("Seleccione su tipo de usuario:");
+    System.out.println("1. Estudiante");
+    System.out.println("2. Profesor");
+    System.out.println("3. Administrador");
+    int opcionTipoUsuario = scanner.nextInt();
+    scanner.nextLine();
 
-                    //Usuario Random, agrega U mas un numero aleatorio para el numero de usuario
-                    String id = "U" + System.currentTimeMillis();
-
-                    Usuario nuevoUsuario = new Usuario(id, nombre, apellido, correo, contraseña, fechaNacimiento, sexo, tipoUsuario);
-                    usuarios.add(nuevoUsuario); // Agregar el nuevo usuario a la lista
-                    nuevoUsuario.crearCuenta();
-                    break;
+    String id = "U" + System.currentTimeMillis();
+    if (opcionTipoUsuario == 1) {
+        Usuario nuevoUsuario = new Usuario(id, nombre, apellido, correo, contraseña, fechaNacimiento, sexo, Usuario.Usuarios.Estudiante);
+        usuarios.add(nuevoUsuario);
+        nuevoUsuario.crearCuenta();
+    } else if (opcionTipoUsuario == 2) {
+        Tutor nuevoTutor = new Tutor(id, nombre, apellido, correo, contraseña, fechaNacimiento, sexo);
+        usuarios.add(nuevoTutor);
+        nuevoTutor.crearCuenta();
+    } else if (opcionTipoUsuario == 3) {
+        System.out.println("Ingrese la contraseña especial para administrador:");
+        String contraseñaAdmin = scanner.nextLine();
+        if (Administrador.validarContraseñaAdmin(contraseñaAdmin)) {
+            Administrador nuevoAdmin = new Administrador(id, nombre, apellido, correo, contraseña, fechaNacimiento, sexo);
+            usuarios.add(nuevoAdmin);
+            nuevoAdmin.crearCuenta();
+        } else {
+            System.out.println("Contraseña especial incorrecta. No se puede crear la cuenta de administrador.");
+        }
+    }
+    break;
 
                 case Opciones.EDITAR_CUENTA:
                     if (usuarios.isEmpty()) {
