@@ -22,7 +22,7 @@ class Usuario {
 
     private Usuarios tipoUsuario;
 
-    enum Usuarios {Estudiante, Profesor}
+    enum Usuarios {Estudiante, Profesor, Administrador}
 
     private Suscripcion suscripcion;
 
