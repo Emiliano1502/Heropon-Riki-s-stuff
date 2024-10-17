@@ -150,7 +150,7 @@ class Administrador extends Usuario {
     private String especialidad;
 
     public Administrador(String id, String nombre, String apellido, String correo, String contraseña, String fechaNacimiento, Sexo sexo) {
-        super(id, nombre, apellido, correo, contraseña, fechaNacimiento, sexo, Usuarios.Profesor);
+        super(id, nombre, apellido, correo, contraseña, fechaNacimiento, sexo, Usuarios.Administrador);
         this.especialidad = "Por Definir";
     }
 
