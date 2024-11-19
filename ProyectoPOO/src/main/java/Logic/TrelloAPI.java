@@ -10,7 +10,7 @@ import org.json.JSONObject;
 public class TrelloAPI {
 
     private static final String API_KEY = "";  // Tu clave de API
-    private static final String TOKEN = "ATATT3xFfGF0EvBPZrPuuSojUhWwHBsyM0zPiF9KROlyqUxqths8TQy1WgMxIrR84MTNiis7zltllSenEpHxIm9bjoz8iA32xfo3htLZEAMQ9cclN89gGnSBOCqXe4JoL99VtT-muQtanqgkAmHmPKYf3fwGr18CueDSmEmt-UsTD9R1AjQZllM=B83E36AA";     // Tu token
+    private static final String TOKEN = "";     // Tu token
     private static final String BOARD_ID = "TU_BOARD_ID"; // ID del tablero
 
     public static void main(String[] args) {
