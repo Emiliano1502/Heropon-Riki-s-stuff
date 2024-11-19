@@ -1,1 +1,0 @@
-[{"fechaNacimiento":"26/10/2005","correo":"sin.rs0tr0@rbx.com","id":"A26/10/2005123","sexo":"Hombre","nombre":"Angel Adrian","contraseña":"HolaTu"}]

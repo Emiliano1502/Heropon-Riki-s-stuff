@@ -1,13 +1,15 @@
 
 package com.mycompany.proyectopoo;
-import GUI.*;
+import GUI.Login;
+import org.json.JSONObject;
+import org.json.JSONArray;
 
 /**
  * @team Plaga
  * @author Gil de Gaona Jazmín
  * @author Hernández Peña Angel Adrian
  * @author Moreno Vigueras Arturo Tadeo
- * @author Ruiz García Emiliano
+ * @author Ruiz Emiliano
  * @version 1.0
  */
 
