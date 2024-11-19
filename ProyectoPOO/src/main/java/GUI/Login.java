@@ -73,9 +73,9 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        bContraV.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/icons/eyeV.png"))); // NOI18N
+        bContraV.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/icon/eyeV.png"))); // NOI18N
         bContraV.setBorderPainted(false);
-        bContraV.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/icons/eyeH.png"))); // NOI18N
+        bContraV.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/icon/eyeH.png"))); // NOI18N
         bContraV.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bContraVActionPerformed(evt);
@@ -133,7 +133,7 @@ public class Login extends javax.swing.JFrame {
                                 .addComponent(bContraV))
                             .addComponent(tUsuario1)
                             .addComponent(bForgot, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(tInicioSesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pLoginLayout.setVerticalGroup(
@@ -170,7 +170,7 @@ public class Login extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 22, Short.MAX_VALUE))
+                .addGap(0, 60, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,6 +190,7 @@ public class Login extends javax.swing.JFrame {
 
     private void bSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSignUpActionPerformed
         // TODO add your handling code here:
+        GUIUtil.abrirVentana(SignUp.class,this);
     }//GEN-LAST:event_bSignUpActionPerformed
 
     private void bForgotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bForgotActionPerformed

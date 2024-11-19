@@ -1,0 +1,11 @@
+[
+    {
+        id 12345,
+        contraseña miClave,
+        correo ejemplo@correo.com,
+        nombre Juan,
+        apellido Pérez,
+        fechaNacimiento 1990-01-01,
+        sexo M
+    }
+]
