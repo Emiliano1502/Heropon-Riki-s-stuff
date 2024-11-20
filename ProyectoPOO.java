@@ -92,6 +92,7 @@ class Usuario {
         this.tipoUsuario = tipoUsuario;
         this.suscripcion = Suscripcion.Basico;
         this.sesionActiva = false;
+
     }
 
     public String getNombre() {
@@ -259,9 +260,26 @@ class Usuario {
     }
 
 
-    public void consultarHistorial() {
-        System.out.println("Usted no ha tomado ninguna asesoría.");
+    public void consultarHistorial(ArrayList<Area> areas) {
+        System.out.println("Consultando historial del usuario...");
+        System.out.println("Racha actual: " + Racha + " días.");
+
+        boolean evaluacionesRealizadas = false;
+        System.out.println("Calificaciones en las evaluaciones:");
+
+        for (Area area : areas) {
+            double calificacion = area.getCalificacionEvaluacion();
+            if (calificacion > 0) {
+                evaluacionesRealizadas = true;
+                System.out.println("- Área: " + area.getNombreArea() + " | Calificación: " + calificacion);
+            }
+        }
+
+        if (!evaluacionesRealizadas) {
+            System.out.println("Aún no se han realizado evaluaciones.");
+        }
     }
+
     
     public void tomarAsesoria(Scanner scanner, ArrayList<Area> areas) {
         System.out.println("Seleccione el área en la que desea tomar asesoría:");
@@ -308,6 +326,7 @@ class Usuario {
                     System.out.println("Iniciando la clase de " + materiaSeleccionada + " con el profesor " + profesorSeleccionado + "...");
                     System.out.println("Bienvenidos a la clase de " + materiaSeleccionada + ". ¡Espero que sea de gran utilidad!");
                     System.out.println("Tu racha de dias ha aumentado a " + (Racha+1) + ".");
+                    Racha++;
                     System.out.println("¿Qué desea hacer ahora?");
                     System.out.println("1. Volver al menú principal");
                     System.out.println("2. Tomar otra asesoría");
@@ -435,10 +454,13 @@ public class Main {
                         System.out.println("3. Tomar asesorías");
                         int opcionAdicional = scanner.nextInt();
                         scanner.nextLine();
-                        if (opcionAdicional == 1) {
+                        if (opcionAdicional == 1) {//Evaluación
                             usuario.completarEvaluacion(scanner, areas);
                         }
-                        if (opcionAdicional == 3) {
+                        if (opcionAdicional == 2) { // Mi historial
+                            usuario.consultarHistorial(areas);
+                        }
+                        if (opcionAdicional == 3) {//Asesorias
                             usuario.tomarAsesoria(scanner, areas);
                         }
                     } else {
