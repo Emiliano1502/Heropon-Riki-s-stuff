@@ -9,8 +9,8 @@ class Opciones {
     public static final int SALIR = 5;
 }
 
-class Area {
-    private String nombreArea;
+class Curso {
+    private String titulo;
     private String descripcion;
     private String temario;
     private ArrayList<String> profesores;
@@ -19,8 +19,8 @@ class Area {
     private ArrayList<String> eventos;
     private ArrayList<String> materias; 
 
-    public Area(String nombreArea, String descripcion, String temario) {
-        this.nombreArea = nombreArea;
+    public Curso(String titulo, String descripcion, String temario) {
+        this.titulo = titulo;
         this.descripcion = descripcion;
         this.temario = temario;
         this.profesores = new ArrayList<>();
@@ -29,8 +29,8 @@ class Area {
         this.materias = new ArrayList<>(); 
     }
 
-    public String getNombreArea() {
-        return nombreArea;
+    public String gettitulo() {
+        return titulo;
     }
 
     public ArrayList<String> getProfesores() {
@@ -171,21 +171,21 @@ class Usuario {
     }
 
 
-    public void completarEvaluacion(Scanner scanner, ArrayList<Area> areas) {
+    public void completarEvaluacion(Scanner scanner, ArrayList<Curso> Cursos) {
         System.out.println("Seleccione el área en la que desea realizar la evaluación:");
-        for (int i = 0; i < areas.size(); i++) {
-            System.out.println((i + 1) + ". " + areas.get(i).getNombreArea());
+        for (int i = 0; i < Cursos.size(); i++) {
+            System.out.println((i + 1) + ". " + Cursos.get(i).gettitulo());
         }
 
-        int seleccionArea = scanner.nextInt();
+        int seleccionCurso = scanner.nextInt();
         scanner.nextLine(); // Limpiar buffer
 
-        if (seleccionArea > 0 && seleccionArea <= areas.size()) {
-            Area areaSeleccionada = areas.get(seleccionArea - 1);
-            System.out.println("Iniciando evaluación en el área: " + areaSeleccionada.getNombreArea());
+        if (seleccionCurso > 0 && seleccionCurso <= Cursos.size()) {
+            Curso CursoSeleccionada = Cursos.get(seleccionCurso - 1);
+            System.out.println("Iniciando evaluación en el área: " + CursoSeleccionada.gettitulo());
 
             int aciertos = 0;
-            switch (areaSeleccionada.getNombreArea()) {
+            switch (CursoSeleccionada.gettitulo()) {
                 case "Ciencias físico-matemáticas y de la ingeniería":
                     aciertos += realizarCuestionario(scanner, new String[]{
                         "¿Cuál es el resultado de 2+2?",
@@ -236,7 +236,7 @@ class Usuario {
             }
 
             double calificacion = (aciertos / 3.0) * 10;
-            areaSeleccionada.setCalificacionEvaluacion(calificacion);
+            CursoSeleccionada.setCalificacionEvaluacion(calificacion);
             System.out.println("Ha completado la evaluación con una calificación de: " + calificacion);
         } else {
             System.out.println("Opción de área no válida.");
@@ -260,18 +260,18 @@ class Usuario {
     }
 
 
-    public void consultarHistorial(ArrayList<Area> areas) {
+    public void consultarHistorial(ArrayList<Curso> Cursos) {
         System.out.println("Consultando historial del usuario...");
         System.out.println("Racha actual: " + Racha + " días.");
 
         boolean evaluacionesRealizadas = false;
         System.out.println("Calificaciones en las evaluaciones:");
 
-        for (Area area : areas) {
-            double calificacion = area.getCalificacionEvaluacion();
+        for (Curso Curso : Cursos) {
+            double calificacion = Curso.getCalificacionEvaluacion();
             if (calificacion > 0) {
                 evaluacionesRealizadas = true;
-                System.out.println("- Área: " + area.getNombreArea() + " | Calificación: " + calificacion);
+                System.out.println("- Área: " + Curso.gettitulo() + " | Calificación: " + calificacion);
             }
         }
 
@@ -281,20 +281,20 @@ class Usuario {
     }
 
     
-    public void tomarAsesoria(Scanner scanner, ArrayList<Area> areas) {
+    public void tomarAsesoria(Scanner scanner, ArrayList<Curso> Cursos) {
         System.out.println("Seleccione el área en la que desea tomar asesoría:");
-        for (int i = 0; i < areas.size(); i++) {
-            System.out.println((i + 1) + ". " + areas.get(i).getNombreArea());
+        for (int i = 0; i < Cursos.size(); i++) {
+            System.out.println((i + 1) + ". " + Cursos.get(i).gettitulo());
         }
 
-        int seleccionArea = scanner.nextInt();
+        int seleccionCurso = scanner.nextInt();
         scanner.nextLine();
 
-        if (seleccionArea > 0 && seleccionArea <= areas.size()) {
-            Area areaSeleccionada = areas.get(seleccionArea - 1);
+        if (seleccionCurso > 0 && seleccionCurso <= Cursos.size()) {
+            Curso CursoSeleccionada = Cursos.get(seleccionCurso - 1);
 
-            ArrayList<String> profesores = areaSeleccionada.getProfesores();
-            ArrayList<String> materias = areaSeleccionada.getMaterias();
+            ArrayList<String> profesores = CursoSeleccionada.getProfesores();
+            ArrayList<String> materias = CursoSeleccionada.getMaterias();
 
             if (profesores.isEmpty()) {
                 System.out.println("No hay profesores disponibles en esta área.");
@@ -335,7 +335,7 @@ class Usuario {
                     scanner.nextLine();
 
                     if (opcion == 2) {
-                        tomarAsesoria(scanner, areas);
+                        tomarAsesoria(scanner, Cursos);
                     } else {
                         System.out.println("Regresando al menú principal...");
                     }
@@ -396,37 +396,37 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         ArrayList<Usuario> usuarios = new ArrayList<>();
-        ArrayList<Area> areas = new ArrayList<>();
+        ArrayList<Curso> Cursos = new ArrayList<>();
 
-        Area area1 = new Area("Ciencias físico-matemáticas y de la ingeniería", "Ciencias exactas y uso de las matemáticas", "Matemáticas, Física, Cálculo, Química, Programación");
-        area1.agregarProfesor("Juan Pérez");
-        area1.agregarProfesor("María López");
-        area1.agregarMateria("Matemáticas");
-        area1.agregarMateria("Física");
-        area1.agregarMateria("Cálculo");
-        area1.agregarMateria("Programación");
-        areas.add(area1);
+        Curso Curso1 = new Curso("Ciencias físico-matemáticas y de la ingeniería", "Ciencias exactas y uso de las matemáticas", "Matemáticas, Física, Cálculo, Química, Programación");
+        Curso1.agregarProfesor("Juan Pérez");
+        Curso1.agregarProfesor("María López");
+        Curso1.agregarMateria("Matemáticas");
+        Curso1.agregarMateria("Física");
+        Curso1.agregarMateria("Cálculo");
+        Curso1.agregarMateria("Programación");
+        Cursos.add(Curso1);
 
-        Area area2 = new Area("Ciencias biológicas, químicas y de la salud", "Uso de las ciencias exactas para el mundo de la biología", "Biología, Química Orgánica, Fisiología, Laboratorio");
-        area2.agregarProfesor("Ismael Rojas");
-        area2.agregarProfesor("Gabriela Guzmán");
-        area2.agregarMateria("Biología");
-        area2.agregarMateria("Química Orgánica");
-        area2.agregarMateria("Fisiología");
-        areas.add(area2);
+        Curso Curso2 = new Curso("Ciencias biológicas, químicas y de la salud", "Uso de las ciencias exactas para el mundo de la biología", "Biología, Química Orgánica, Fisiología, Laboratorio");
+        Curso2.agregarProfesor("Ismael Rojas");
+        Curso2.agregarProfesor("Gabriela Guzmán");
+        Curso2.agregarMateria("Biología");
+        Curso2.agregarMateria("Química Orgánica");
+        Curso2.agregarMateria("Fisiología");
+        Cursos.add(Curso2);
 
-        Area area3 = new Area("Ciencias Sociales", "Disciplinas dedicadas al estudio del ser humano y sus interacciones en sociedad", "Derecho, Sociologia, Filosofia");
-        area3.agregarProfesor("Domingo Zapata");
-        area3.agregarProfesor("Pilar Rosales");
-        area3.agregarMateria("Sociologia y Humanismo");
-        area3.agregarMateria("RI en Asia y el Pacifico");
-        areas.add(area3);
-        Area area4 = new Area("Humanidades y Artes", "Disciplina de la expresion fisica, visual y sonora del ser humano", "Musica, Literatura, Diseño de Interiores");
-        area4.agregarProfesor("Ludwig Aaron");
-        area4.agregarProfesor("Fabiola Fuentes");
-        area4.agregarMateria("Diseño de Interiores");
-        area4.agregarMateria("Dibujo y puntos de fuga");
-        areas.add(area4);
+        Curso Curso3 = new Curso("Ciencias Sociales", "Disciplinas dedicadas al estudio del ser humano y sus interacciones en sociedad", "Derecho, Sociologia, Filosofia");
+        Curso3.agregarProfesor("Domingo Zapata");
+        Curso3.agregarProfesor("Pilar Rosales");
+        Curso3.agregarMateria("Sociologia y Humanismo");
+        Curso3.agregarMateria("RI en Asia y el Pacifico");
+        Cursos.add(Curso3);
+        Curso Curso4 = new Curso("Humanidades y Artes", "Disciplina de la expresion fisica, visual y sonora del ser humano", "Musica, Literatura, Diseño de Interiores");
+        Curso4.agregarProfesor("Ludwig Aaron");
+        Curso4.agregarProfesor("Fabiola Fuentes");
+        Curso4.agregarMateria("Diseño de Interiores");
+        Curso4.agregarMateria("Dibujo y puntos de fuga");
+        Cursos.add(Curso4);
         int opcion;
         do {
             System.out.println("Seleccione una opción:");
@@ -455,13 +455,13 @@ public class Main {
                         int opcionAdicional = scanner.nextInt();
                         scanner.nextLine();
                         if (opcionAdicional == 1) {//Evaluación
-                            usuario.completarEvaluacion(scanner, areas);
+                            usuario.completarEvaluacion(scanner, Cursos);
                         }
                         if (opcionAdicional == 2) { // Mi historial
-                            usuario.consultarHistorial(areas);
+                            usuario.consultarHistorial(Cursos);
                         }
                         if (opcionAdicional == 3) {//Asesorias
-                            usuario.tomarAsesoria(scanner, areas);
+                            usuario.tomarAsesoria(scanner, Cursos);
                         }
                     } else {
                         System.out.println("Usuario no encontrado.");
