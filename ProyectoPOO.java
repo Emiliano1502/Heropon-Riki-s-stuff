@@ -18,7 +18,8 @@ class Curso {
     private double calificacionEvaluacion;
     private ArrayList<String> eventos;
     private ArrayList<String> materias; 
-
+private ArrayList<Evaluacion> evaluaciones;
+    
     public Curso(String titulo, String descripcion, String temario) {
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -27,12 +28,21 @@ class Curso {
         this.promedio = 0.0;
         this.eventos = new ArrayList<>();
         this.materias = new ArrayList<>(); 
+        this.evaluaciones = new ArrayList<>();
     }
 
     public String gettitulo() {
         return titulo;
     }
 
+ public void agregarEvaluacion(Evaluacion evaluacion) {
+        evaluaciones.add(evaluacion);
+    }
+
+ public ArrayList<Evaluacion> getEvaluaciones() {
+        return evaluaciones;
+    }
+    
     public ArrayList<String> getProfesores() {
         return profesores;
     }
@@ -58,6 +68,43 @@ class Curso {
     }
 }
 
+class Evaluacion {
+    private String titulo;
+    private int puntajeMaximo;
+    private ArrayList<String> preguntas;
+    private ArrayList<String[]> opciones;
+    private ArrayList<Integer> respuestasCorrectas;
+    private String autor;
+
+    public Evaluacion(String titulo, int puntajeMaximo, ArrayList<String> preguntas, ArrayList<String[]> opciones, ArrayList<Integer> respuestasCorrectas, String autor) {
+        this.titulo = titulo;
+        this.puntajeMaximo = puntajeMaximo;
+        this.preguntas = preguntas;
+        this.opciones = opciones;
+        this.respuestasCorrectas = respuestasCorrectas;
+        this.autor = autor;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public int getPuntajeMaximo() {
+        return puntajeMaximo;
+    }
+
+    public ArrayList<String> getPreguntas() {
+        return preguntas;
+    }
+
+    public ArrayList<String[]> getOpciones() {
+        return opciones;
+    }
+
+    public ArrayList<Integer> getRespuestasCorrectas() {
+        return respuestasCorrectas;
+    }
+}
 
 class Usuario {
     private String id;
@@ -171,21 +218,74 @@ class Usuario {
     }
 
 
-    public void completarEvaluacion(Scanner scanner, ArrayList<Curso> Cursos) {
-        System.out.println("Seleccione el área en la que desea realizar la evaluación:");
-        for (int i = 0; i < Cursos.size(); i++) {
-            System.out.println((i + 1) + ". " + Cursos.get(i).gettitulo());
+public void completarEvaluacion(Scanner scanner, ArrayList<Curso> Cursos) {
+    System.out.println("Seleccione el área en la que desea realizar la evaluación:");
+    for (int i = 0; i < Cursos.size(); i++) {
+        System.out.println((i + 1) + ". " + Cursos.get(i).gettitulo());
+    }
+
+    int seleccionCurso = scanner.nextInt();
+    scanner.nextLine(); // Limpiar buffer
+
+    if (seleccionCurso > 0 && seleccionCurso <= Cursos.size()) {
+        Curso cursoSeleccionado = Cursos.get(seleccionCurso - 1);
+        System.out.println("Iniciando evaluación en el área: " + cursoSeleccionado.gettitulo());
+
+        // Obtener evaluaciones personalizadas del curso
+        ArrayList<Evaluacion> evaluaciones = cursoSeleccionado.getEvaluaciones();
+
+        if (!evaluaciones.isEmpty()) {
+            System.out.println("Seleccione una evaluación para realizar:");
+            for (int i = 0; i < evaluaciones.size(); i++) {
+                System.out.println((i + 1) + ". " + evaluaciones.get(i).getTitulo());
+            }
+            System.out.println((evaluaciones.size() + 1) + ". Evaluaciones predeterminadas");
+
+            int seleccionEvaluacion = scanner.nextInt();
+            scanner.nextLine();
+
+            if (seleccionEvaluacion > 0 && seleccionEvaluacion <= evaluaciones.size()) {
+                Evaluacion evaluacionSeleccionada = evaluaciones.get(seleccionEvaluacion - 1);
+                realizarEvaluacion(scanner, evaluacionSeleccionada);
+            } else if (seleccionEvaluacion == evaluaciones.size() + 1) {
+                realizarEvaluacionesPredeterminadas(scanner, cursoSeleccionado);
+            } else {
+                System.out.println("Opción no válida.");
+            }
+        } else {
+            realizarEvaluacionesPredeterminadas(scanner, cursoSeleccionado);
         }
+    } else {
+        System.out.println("Opción de área no válida.");
+    }
+}
 
-        int seleccionCurso = scanner.nextInt();
-        scanner.nextLine(); // Limpiar buffer
+private void realizarEvaluacion(Scanner scanner, Evaluacion evaluacion) {
+    System.out.println("Evaluación: " + evaluacion.getTitulo());
+    ArrayList<String> preguntas = evaluacion.getPreguntas();
+    ArrayList<String[]> opciones = evaluacion.getOpciones();
+    ArrayList<Integer> respuestasCorrectas = evaluacion.getRespuestasCorrectas();
 
-        if (seleccionCurso > 0 && seleccionCurso <= Cursos.size()) {
-            Curso CursoSeleccionada = Cursos.get(seleccionCurso - 1);
-            System.out.println("Iniciando evaluación en el área: " + CursoSeleccionada.gettitulo());
+    int aciertos = 0;
+    for (int i = 0; i < preguntas.size(); i++) {
+        System.out.println(preguntas.get(i));
+        for (int j = 0; j < opciones.get(i).length; j++) {
+            System.out.println((j + 1) + ". " + opciones.get(i)[j]);
+        }
+        System.out.print("Seleccione la opción correcta: ");
+        int respuesta = scanner.nextInt() - 1; // Convertir opción 1=a, 2=b, etc.
+        if (respuesta == respuestasCorrectas.get(i)) {
+            aciertos++;
+        }
+    }
+    double calificacion = (aciertos / (double) preguntas.size()) * 10;
+    System.out.println("Ha completado la evaluación con una calificación de: " + calificacion);
+}
 
-            int aciertos = 0;
-            switch (CursoSeleccionada.gettitulo()) {
+private void realizarEvaluacionesPredeterminadas(Scanner scanner, Curso cursoSeleccionado) {
+    System.out.println("Realizando evaluación predeterminada...");
+    int aciertos = 0;
+        switch (cursoSeleccionado.gettitulo()) {
                 case "Ciencias físico-matemáticas y de la ingeniería":
                     aciertos += realizarCuestionario(scanner, new String[]{
                         "¿Cuál es el resultado de 2+2?",
@@ -236,12 +336,10 @@ class Usuario {
             }
 
             double calificacion = (aciertos / 3.0) * 10;
-            CursoSeleccionada.setCalificacionEvaluacion(calificacion);
+            cursoSeleccionado.setCalificacionEvaluacion(calificacion);
             System.out.println("Ha completado la evaluación con una calificación de: " + calificacion);
-        } else {
-            System.out.println("Opción de área no válida.");
         }
-    }
+
 
     private int realizarCuestionario(Scanner scanner, String[] preguntas, String[][] opciones, int[] respuestasCorrectas) {
         int aciertos = 0;
@@ -365,9 +463,11 @@ class Usuario {
 class Tutor extends Usuario {
     private String especialidad;
     private String disponibilidad;
+    private ArrayList<Evaluacion> evaluaciones;
 
     public Tutor(String id, String nombre, String apellido, String correo, String contraseña, String fechaNacimiento, Sexo sexo) {
         super(id, nombre, apellido, correo, contraseña, fechaNacimiento, sexo, Usuarios.Profesor);
+        this.evaluaciones = new ArrayList<>();
         this.especialidad = "Por Definir";
         this.disponibilidad = "Por Definir";
     }
@@ -375,7 +475,46 @@ class Tutor extends Usuario {
     public void asignarEstudiante() {}
     public void consultarProgreso() {}
     public void agendarSesion() {}
+        public void crearEvaluacion(Scanner scanner) {
+        System.out.println("Ingrese el título de la evaluación:");
+        String titulo = scanner.nextLine();
+        System.out.println("Ingrese el puntaje máximo:");
+        int puntajeMaximo = scanner.nextInt();
+        scanner.nextLine();
+
+        ArrayList<String> preguntas = new ArrayList<>();
+        ArrayList<String[]> opciones = new ArrayList<>();
+        ArrayList<Integer> respuestasCorrectas = new ArrayList<>();
+
+        while (true) {
+            System.out.println("Ingrese una pregunta (o 'fin' para terminar):");
+            String pregunta = scanner.nextLine();
+            if (pregunta.equalsIgnoreCase("fin")) break;
+
+            preguntas.add(pregunta);
+            String[] opcionesPregunta = new String[3];
+            for (int i = 0; i < 3; i++) {
+                System.out.println("Ingrese la opción " + (char) ('a' + i) + ":");
+                opcionesPregunta[i] = scanner.nextLine();
+            }
+            opciones.add(opcionesPregunta);
+
+            System.out.println("Ingrese el índice de la respuesta correcta (0=a, 1=b, 2=c):");
+            int respuestaCorrecta = scanner.nextInt();
+            scanner.nextLine();
+            respuestasCorrectas.add(respuestaCorrecta);
+        }
+
+        Evaluacion evaluacion = new Evaluacion(titulo, puntajeMaximo, preguntas, opciones, respuestasCorrectas, this.getNombre());
+        evaluaciones.add(evaluacion);
+        System.out.println("Evaluación creada con éxito.");
+    }
+
+    public ArrayList<Evaluacion> getEvaluaciones() {
+        return evaluaciones;
+    }
 }
+
 
 class Administrador extends Usuario {
     private String especialidad;
@@ -454,13 +593,55 @@ public class Main {
                         System.out.println("3. Tomar asesorías");
                         int opcionAdicional = scanner.nextInt();
                         scanner.nextLine();
-                        if (opcionAdicional == 1) {//Evaluación
-                            usuario.completarEvaluacion(scanner, Cursos);
+                                                if (opcionAdicional == 1) { // Evaluación
+                            if (usuario instanceof Tutor) {
+                                System.out.println("Usted es un profesor. ¿Desea crear una evaluación?");
+                                System.out.println("1. Sí");
+                                System.out.println("2. No, realizar una evaluación");
+
+                                int opcionEvaluacion = scanner.nextInt();
+                                scanner.nextLine();
+
+                                if (opcionEvaluacion == 1) {
+                                    ((Tutor) usuario).crearEvaluacion(scanner);
+                                    System.out.println("¿Desea agregar esta evaluación a un curso?");
+                                    System.out.println("1. Sí");
+                                    System.out.println("2. No");
+
+                                    int opcionAgregarCurso = scanner.nextInt();
+                                    scanner.nextLine();
+
+                                    if (opcionAgregarCurso == 1) {
+                                        System.out.println("Seleccione el curso:");
+                                        for (int i = 0; i < Cursos.size(); i++) {
+                                            System.out.println((i + 1) + ". " + Cursos.get(i).gettitulo());
+                                        }
+
+                                        int seleccionCurso = scanner.nextInt();
+                                        scanner.nextLine();
+
+                                        if (seleccionCurso > 0 && seleccionCurso <= Cursos.size()) {
+                                            Curso cursoSeleccionado = Cursos.get(seleccionCurso - 1);
+                                            Evaluacion evaluacionReciente = ((Tutor) usuario).getEvaluaciones().get(((Tutor) usuario).getEvaluaciones().size() - 1);
+                                            cursoSeleccionado.agregarEvaluacion(evaluacionReciente);
+                                            System.out.println("Evaluación agregada al curso: " + cursoSeleccionado.gettitulo());
+                                        } else {
+                                            System.out.println("Opción de curso no válida.");
+                                        }
+                                    }
+                                } else {
+                                    usuario.completarEvaluacion(scanner, Cursos);
+                                }
+                            } else {
+                                usuario.completarEvaluacion(scanner, Cursos);
+                            }
                         }
+
                         if (opcionAdicional == 2) { // Mi historial
                             usuario.consultarHistorial(Cursos);
                         }
-                        if (opcionAdicional == 3) {//Asesorias
+
+                        if (opcionAdicional == 3) { // Asesorías
                             usuario.tomarAsesoria(scanner, Cursos);
                         }
                     } else {
