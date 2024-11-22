@@ -25,6 +25,7 @@ public class Login extends javax.swing.JFrame {
         bSignIn = new javax.swing.JButton();
         bSignUp = new javax.swing.JButton();
         bForgot = new javax.swing.JButton();
+        tPass = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -110,6 +111,9 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
+        tPass.setEnabled(false);
+        tPass.setFocusable(false);
+
         javax.swing.GroupLayout pLoginLayout = new javax.swing.GroupLayout(pLogin);
         pLogin.setLayout(pLoginLayout);
         pLoginLayout.setHorizontalGroup(
@@ -132,8 +136,11 @@ public class Login extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(bContraV))
                             .addComponent(tUsuario1)
-                            .addComponent(bForgot, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(bForgot, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(pLoginLayout.createSequentialGroup()
+                                .addComponent(tPass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(7, 7, 7)))))
+                .addContainerGap(20, Short.MAX_VALUE))
             .addComponent(tInicioSesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pLoginLayout.setVerticalGroup(
@@ -159,7 +166,9 @@ public class Login extends javax.swing.JFrame {
                 .addGroup(pLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bSignIn)
                     .addComponent(bSignUp))
-                .addContainerGap(75, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addComponent(tPass, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         tInicioSesion.getAccessibleContext().setAccessibleDescription("");
@@ -168,9 +177,7 @@ public class Login extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(pLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 60, Short.MAX_VALUE))
+            .addComponent(pLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,6 +202,9 @@ public class Login extends javax.swing.JFrame {
 
     private void bForgotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bForgotActionPerformed
         // TODO add your handling code here:
+        if(vUsuario.getText()!=""){
+            //Buscar usuario en BD y poner en tPass
+        }
     }//GEN-LAST:event_bForgotActionPerformed
 
     private void bContraVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bContraVActionPerformed
@@ -233,6 +243,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel pLogin;
     private javax.swing.JLabel tContra;
     private javax.swing.JLabel tInicioSesion;
+    private javax.swing.JLabel tPass;
     private javax.swing.JLabel tUsuario1;
     private javax.swing.JPasswordField vContra;
     private javax.swing.JTextField vUsuario;

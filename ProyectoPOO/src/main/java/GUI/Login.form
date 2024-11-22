@@ -23,10 +23,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <Component id="pLogin" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="60" max="32767" attributes="0"/>
-          </Group>
+          <Component id="pLogin" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -68,10 +65,14 @@
                               </Group>
                               <Component id="tUsuario1" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="bForgot" max="32767" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="tPass" max="32767" attributes="0"/>
+                                  <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="20" max="32767" attributes="0"/>
               </Group>
               <Component id="tInicioSesion" alignment="0" max="32767" attributes="0"/>
           </Group>
@@ -101,7 +102,9 @@
                       <Component id="bSignIn" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="bSignUp" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="75" max="32767" attributes="0"/>
+                  <EmptySpace pref="34" max="32767" attributes="0"/>
+                  <Component id="tPass" min="-2" pref="19" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -245,6 +248,12 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bForgotActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="tPass">
+          <Properties>
+            <Property name="enabled" type="boolean" value="false"/>
+            <Property name="focusable" type="boolean" value="false"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
