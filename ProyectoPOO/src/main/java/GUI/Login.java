@@ -1,6 +1,7 @@
 package GUI;
 
 import java.awt.Color;
+import javax.swing.JPasswordField;
 
 public class Login extends javax.swing.JFrame {
 
@@ -74,9 +75,8 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        bContraV.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/icon/eyeV.png"))); // NOI18N
+        bContraV.setText("V");
         bContraV.setBorderPainted(false);
-        bContraV.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/icon/eyeH.png"))); // NOI18N
         bContraV.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bContraVActionPerformed(evt);
@@ -140,7 +140,7 @@ public class Login extends javax.swing.JFrame {
                             .addGroup(pLoginLayout.createSequentialGroup()
                                 .addComponent(tPass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(7, 7, 7)))))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
             .addComponent(tInicioSesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pLoginLayout.setVerticalGroup(
@@ -228,8 +228,12 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_vContraActionPerformed
 
     private void vContraFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_vContraFocusGained
-        if (vContra.getText().equals("Ingrese una contraseña")) {
-            vContra.setText(""); // Borra el contenido
+         char[] passwordArray = vContra.getPassword(); // Obtén el arreglo de caracteres de vContra
+        String password = new String(passwordArray);  // Convierte el arreglo a String para compararlo
+
+        if (password.equals("Ingrese una contraseña")) { // Compara con la cadena deseada
+            vContra.setText(""); // Borra el contenido del campo
+            vContra.setForeground(Color.BLACK); // Cambia el color a negro
         }
     }//GEN-LAST:event_vContraFocusGained
 
