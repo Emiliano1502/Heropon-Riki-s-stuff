@@ -1,7 +1,10 @@
 package GUI;
 
+import Logic.*;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
+import org.json.JSONObject;
 
 public class Login extends javax.swing.JFrame {
 
@@ -36,6 +39,8 @@ public class Login extends javax.swing.JFrame {
         tInicioSesion.setFont(new java.awt.Font("Ravenscroft", 0, 36)); // NOI18N
         tInicioSesion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         tInicioSesion.setText("Iniciar Sesión");
+        tInicioSesion.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        tInicioSesion.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
 
         tContra.setFont(new java.awt.Font("Perpetua", 1, 18)); // NOI18N
         tContra.setForeground(new java.awt.Color(39, 185, 39));
@@ -43,7 +48,7 @@ public class Login extends javax.swing.JFrame {
 
         vUsuario.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         vUsuario.setForeground(new java.awt.Color(153, 153, 153));
-        vUsuario.setText("Ingrese su usuario");
+        vUsuario.setText("Ingrese su correo");
         vUsuario.setBorder(javax.swing.BorderFactory.createEtchedBorder(null, new java.awt.Color(0, 204, 51)));
         vUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         vUsuario.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -59,7 +64,7 @@ public class Login extends javax.swing.JFrame {
 
         tUsuario1.setFont(new java.awt.Font("Perpetua", 1, 18)); // NOI18N
         tUsuario1.setForeground(new java.awt.Color(39, 185, 39));
-        tUsuario1.setText("Usuario:");
+        tUsuario1.setText("Correo:");
 
         vContra.setText("Ingrese una contraseña");
         vContra.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(39, 185, 39)));
@@ -76,6 +81,7 @@ public class Login extends javax.swing.JFrame {
         });
 
         bContraV.setText("V");
+        bContraV.setBorder(null);
         bContraV.setBorderPainted(false);
         bContraV.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -140,7 +146,7 @@ public class Login extends javax.swing.JFrame {
                             .addGroup(pLoginLayout.createSequentialGroup()
                                 .addComponent(tPass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(7, 7, 7)))))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
             .addComponent(tInicioSesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pLoginLayout.setVerticalGroup(
@@ -193,6 +199,37 @@ public class Login extends javax.swing.JFrame {
 
     private void bSignInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSignInActionPerformed
         // TODO add your handling code here:
+        String correo = vUsuario.getText();
+        String contraseña = new String(vContra.getPassword());
+
+        // Validar campos vacíos
+        if (correo.isEmpty() || contraseña.isEmpty()) {
+            tPass.setText("Usuario o contraseña inválido");
+        }
+
+        // Buscar el usuario por correo y validar la contraseña
+        JSONObject usuarioJson = ArchivoUsuarios.leerUsuarios().stream()
+                .filter(u -> u.getString("correo").equals(correo) && u.getString("contraseña").equals(contraseña))
+                .findFirst()
+                .orElse(null);
+
+        if (usuarioJson != null) {
+            // Crear el objeto Usuario
+            Usuario usuario;
+            usuario = new Usuario(
+                    usuarioJson.getString("id"),
+                    usuarioJson.getString("nombre"),
+                    usuarioJson.getString("correo"),
+                    usuarioJson.getString("contraseña"),
+                    usuarioJson.getString("fechaNacimiento"),
+                    Usuario.Sexo.valueOf(usuarioJson.getString("sexo")),
+               Usuario.Usuarios.valueOf(usuarioJson.getString("tUser"))
+            );
+            Menu.setUsuario(usuario); // Configura el usuario en la clase Menu
+            GUIUtil.abrirVentana(Menu.class,this);
+        } else {
+            tPass.setText("Usuario o contraseña inválido");
+        }
     }//GEN-LAST:event_bSignInActionPerformed
 
     private void bSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSignUpActionPerformed
@@ -201,9 +238,26 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_bSignUpActionPerformed
 
     private void bForgotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bForgotActionPerformed
-        // TODO add your handling code here:
-        if(vUsuario.getText()!=""){
-            //Buscar usuario en BD y poner en tPass
+        String correo = vUsuario.getText(); // Obtiene el correo del JTextField
+
+        // Validar si el campo está vacío
+        if (correo.isEmpty()) {
+            tPass.setText("Por favor, ingrese el correo del usuario");
+            return;
+        }
+
+        // Buscar el usuario por correo en BD.txt
+        JSONObject usuarioJson = ArchivoUsuarios.leerUsuarios().stream()
+                .filter(u -> u.getString("correo").equals(correo))
+                .findFirst()
+                .orElse(null);
+
+        if (usuarioJson != null) {
+            // Mostrar la contraseña en el JLabel
+            tPass.setText(usuarioJson.getString("contraseña"));
+        } else {
+            // Mostrar mensaje de error si no se encuentra el usuario
+            tPass.setText("Usuario no encontrado");
         }
     }//GEN-LAST:event_bForgotActionPerformed
 
@@ -217,7 +271,7 @@ public class Login extends javax.swing.JFrame {
 
     private void vUsuarioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_vUsuarioFocusGained
     // Cuando el cuadro de texto obtiene el foco
-    if (vUsuario.getText().equals("Ingrese su usuario")) {
+    if (vUsuario.getText().equals("Ingrese su correo")) {
         vUsuario.setText(""); // Borra el contenido
         vUsuario.setForeground(Color.BLACK); // Cambia el color a negro
     }

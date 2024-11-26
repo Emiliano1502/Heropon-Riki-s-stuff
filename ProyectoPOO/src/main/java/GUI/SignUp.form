@@ -135,8 +135,8 @@
                       <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                       <Component id="vSexo" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="tError" pref="14" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="tError" pref="22" max="32767" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="bRegistro" min="-2" max="-2" attributes="0"/>

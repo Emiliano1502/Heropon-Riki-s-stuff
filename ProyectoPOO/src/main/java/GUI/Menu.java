@@ -4,17 +4,22 @@
  */
 package GUI;
 
+import Logic.Usuario;
+
 /**
  *
  * @author Angel
  */
 public class Menu extends javax.swing.JFrame {
-
+    private static Usuario usuario;
     /**
      * Creates new form Menu
      */
     public Menu() {
         initComponents();
+    }
+    public static void setUsuario(Usuario usuario) {
+        Menu.usuario = usuario;
     }
 
     /**
@@ -32,8 +37,14 @@ public class Menu extends javax.swing.JFrame {
         bA1 = new javax.swing.JButton();
         bA3 = new javax.swing.JButton();
         bA4 = new javax.swing.JButton();
+        lUser = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -76,6 +87,8 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
+        lUser.setText("Hola: USUARIO !");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -92,14 +105,18 @@ public class Menu extends javax.swing.JFrame {
                             .addComponent(bA2, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(bA4, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(jLabel1)))
+                        .addGap(24, 24, 24)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lUser)
+                            .addComponent(jLabel1))))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addGap(15, 15, 15)
+                .addComponent(lUser)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -134,6 +151,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void bA1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bA1ActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_bA1ActionPerformed
 
     private void bA3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bA3ActionPerformed
@@ -143,6 +161,11 @@ public class Menu extends javax.swing.JFrame {
     private void bA4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bA4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_bA4ActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        lUser.setText("Hola "+usuario.getNombre()+"!");
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -156,5 +179,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JButton bA4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lUser;
     // End of variables declaration//GEN-END:variables
 }

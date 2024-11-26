@@ -1,1 +1,1 @@
-[{"fechaNacimiento":"26/10/2005","correo":"sin.rs0tr0@rbx.com","id":"A26/10/2005123","sexo":"Hombre","nombre":"Angel Adrian","contraseña":"HolaTu"}]
+[{"tUser":"Estudiante","fechaNacimiento":"09/11/2006","correo":"yo@gmail.com","id":"Y09/11/2006123","sexo":"Hombre","nombre":"Yooo asea","contraseña":"Yo"}]

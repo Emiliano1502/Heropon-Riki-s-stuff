@@ -200,8 +200,8 @@ public class SignUp extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addComponent(vSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(tError, javax.swing.GroupLayout.DEFAULT_SIZE, 14, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tError, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(bRegistro)
@@ -269,6 +269,7 @@ public class SignUp extends javax.swing.JFrame {
             usuario.put("fechaNacimiento", tFecha.getText());
             usuario.put("sexo", vSexo.getSelectedItem());
             usuario.put("id",texto);
+            usuario.put("tUser","Estudiante");
             if("".equals(tContra.getText()) || tCorreo.getText().length()<5){
                 tError.setText("Contraseña no válida.\n Longitud mínima: 5.");
                 return;
