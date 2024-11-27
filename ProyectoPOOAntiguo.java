@@ -1,7 +1,14 @@
+<<<<<<< HEAD:ProyectoPOO.java
+
+=======
+//PROGRAMA ANTIGUO POR SI NECESITO UN BACKUP
+>>>>>>> 7ee50c0f5c75faa9b3b7e997acfea871f5a6a74b:ProyectoPOOAntiguo.java
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
 class Opciones {
+
     public static final int INGRESAR_SISTEMA = 1;
     public static final int CREAR_CUENTA = 2;
     public static final int EDITAR_CUENTA = 3;
@@ -10,6 +17,7 @@ class Opciones {
 }
 
 class Curso {
+
     private String titulo;
     private String descripcion;
     private String temario;
@@ -17,9 +25,9 @@ class Curso {
     private double promedio;
     private double calificacionEvaluacion;
     private ArrayList<String> eventos;
-    private ArrayList<String> materias; 
-private ArrayList<Evaluacion> evaluaciones;
-    
+    private ArrayList<String> materias;
+    private ArrayList<Evaluacion> evaluaciones;
+
     public Curso(String titulo, String descripcion, String temario) {
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -27,7 +35,7 @@ private ArrayList<Evaluacion> evaluaciones;
         this.profesores = new ArrayList<>();
         this.promedio = 0.0;
         this.eventos = new ArrayList<>();
-        this.materias = new ArrayList<>(); 
+        this.materias = new ArrayList<>();
         this.evaluaciones = new ArrayList<>();
     }
 
@@ -35,14 +43,14 @@ private ArrayList<Evaluacion> evaluaciones;
         return titulo;
     }
 
- public void agregarEvaluacion(Evaluacion evaluacion) {
+    public void agregarEvaluacion(Evaluacion evaluacion) {
         evaluaciones.add(evaluacion);
     }
 
- public ArrayList<Evaluacion> getEvaluaciones() {
+    public ArrayList<Evaluacion> getEvaluaciones() {
         return evaluaciones;
     }
-    
+
     public ArrayList<String> getProfesores() {
         return profesores;
     }
@@ -54,13 +62,13 @@ private ArrayList<Evaluacion> evaluaciones;
     public double getCalificacionEvaluacion() {
         return calificacionEvaluacion;
     }
-    
+
     public void agregarProfesor(String profesor) {
         profesores.add(profesor);
     }
 
     public void agregarMateria(String materia) {
-        materias.add(materia); 
+        materias.add(materia);
     }
 
     public void setCalificacionEvaluacion(double calificacionEvaluacion) {
@@ -68,49 +76,8 @@ private ArrayList<Evaluacion> evaluaciones;
     }
 }
 
-class Progreso<T> {
-    private String titulo;
-    private int progreso; // Porcentaje de progreso (0-100)
-    private Date ultimaActividad;
-    private T actividad; // Genérico para soportar diferentes tipos de actividades (Evaluación, Curso, etc.)
-
-    public Progreso(String titulo, T actividad) {
-        this.titulo = titulo;
-        this.actividad = actividad;
-        this.progreso = 0; // Inicia con 0% de progreso
-        this.ultimaActividad = new Date(); // Fecha de creación como última actividad
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public int getProgreso() {
-        return progreso;
-    }
-
-    public Date getUltimaActividad() {
-        return ultimaActividad;
-    }
-
-    public void actualizarProgreso(int progresoAdicional) {
-        if (progresoAdicional < 0) {
-            System.out.println("El progreso adicional no puede ser negativo.");
-            return;
-        }
-        this.progreso = Math.min(100, this.progreso + progresoAdicional); // Evitar que supere el 100%
-        this.ultimaActividad = new Date(); // Actualiza la fecha de la última actividad
-        System.out.println("El progreso de la actividad '" + titulo + "' se ha actualizado a " + this.progreso + "%.");
-    }
-
-    public void consultarProgreso() {
-        System.out.println("Actividad: " + titulo);
-        System.out.println("Progreso: " + progreso + "% completado.");
-        System.out.println("Última actividad registrada: " + ultimaActividad);
-    }
-}
-
 class Evaluacion {
+
     private String titulo;
     private int puntajeMaximo;
     private ArrayList<String> preguntas;
@@ -149,6 +116,7 @@ class Evaluacion {
 }
 
 class Usuario {
+
     private String id;
     private String contraseña;
     private String correo;
@@ -158,15 +126,21 @@ class Usuario {
     private Sexo sexo;
     private int Racha;
 
-    enum Sexo {Hombre, Mujer, NoEspecificar}
+    enum Sexo {
+        Hombre, Mujer, NoEspecificar
+    }
 
     private Usuarios tipoUsuario;
 
-    enum Usuarios {Estudiante, Profesor, Administrador}
+    enum Usuarios {
+        Estudiante, Profesor, Administrador
+    }
 
     private Suscripcion suscripcion;
 
-    enum Suscripcion {Basico, Medio, Premium}
+    enum Suscripcion {
+        Basico, Medio, Premium
+    }
 
     private boolean sesionActiva;
 
@@ -259,129 +233,127 @@ class Usuario {
         return numeroTarjeta.length() == 16 && cvv.length() == 3;
     }
 
+    public void completarEvaluacion(Scanner scanner, ArrayList<Curso> Cursos) {
+        System.out.println("Seleccione el área en la que desea realizar la evaluación:");
+        for (int i = 0; i < Cursos.size(); i++) {
+            System.out.println((i + 1) + ". " + Cursos.get(i).gettitulo());
+        }
 
-public void completarEvaluacion(Scanner scanner, ArrayList<Curso> Cursos) {
-    System.out.println("Seleccione el área en la que desea realizar la evaluación:");
-    for (int i = 0; i < Cursos.size(); i++) {
-        System.out.println((i + 1) + ". " + Cursos.get(i).gettitulo());
-    }
+        int seleccionCurso = scanner.nextInt();
+        scanner.nextLine(); // Limpiar buffer
 
-    int seleccionCurso = scanner.nextInt();
-    scanner.nextLine(); // Limpiar buffer
+        if (seleccionCurso > 0 && seleccionCurso <= Cursos.size()) {
+            Curso cursoSeleccionado = Cursos.get(seleccionCurso - 1);
+            System.out.println("Iniciando evaluación en el área: " + cursoSeleccionado.gettitulo());
 
-    if (seleccionCurso > 0 && seleccionCurso <= Cursos.size()) {
-        Curso cursoSeleccionado = Cursos.get(seleccionCurso - 1);
-        System.out.println("Iniciando evaluación en el área: " + cursoSeleccionado.gettitulo());
+            // Obtener evaluaciones personalizadas del curso
+            ArrayList<Evaluacion> evaluaciones = cursoSeleccionado.getEvaluaciones();
 
-        // Obtener evaluaciones personalizadas del curso
-        ArrayList<Evaluacion> evaluaciones = cursoSeleccionado.getEvaluaciones();
+            if (!evaluaciones.isEmpty()) {
+                System.out.println("Seleccione una evaluación para realizar:");
+                for (int i = 0; i < evaluaciones.size(); i++) {
+                    System.out.println((i + 1) + ". " + evaluaciones.get(i).getTitulo());
+                }
+                System.out.println((evaluaciones.size() + 1) + ". Evaluaciones predeterminadas");
 
-        if (!evaluaciones.isEmpty()) {
-            System.out.println("Seleccione una evaluación para realizar:");
-            for (int i = 0; i < evaluaciones.size(); i++) {
-                System.out.println((i + 1) + ". " + evaluaciones.get(i).getTitulo());
-            }
-            System.out.println((evaluaciones.size() + 1) + ". Evaluaciones predeterminadas");
+                int seleccionEvaluacion = scanner.nextInt();
+                scanner.nextLine();
 
-            int seleccionEvaluacion = scanner.nextInt();
-            scanner.nextLine();
-
-            if (seleccionEvaluacion > 0 && seleccionEvaluacion <= evaluaciones.size()) {
-                Evaluacion evaluacionSeleccionada = evaluaciones.get(seleccionEvaluacion - 1);
-                realizarEvaluacion(scanner, evaluacionSeleccionada);
-            } else if (seleccionEvaluacion == evaluaciones.size() + 1) {
-                realizarEvaluacionesPredeterminadas(scanner, cursoSeleccionado);
+                if (seleccionEvaluacion > 0 && seleccionEvaluacion <= evaluaciones.size()) {
+                    Evaluacion evaluacionSeleccionada = evaluaciones.get(seleccionEvaluacion - 1);
+                    realizarEvaluacion(scanner, evaluacionSeleccionada);
+                } else if (seleccionEvaluacion == evaluaciones.size() + 1) {
+                    realizarEvaluacionesPredeterminadas(scanner, cursoSeleccionado);
+                } else {
+                    System.out.println("Opción no válida.");
+                }
             } else {
-                System.out.println("Opción no válida.");
+                realizarEvaluacionesPredeterminadas(scanner, cursoSeleccionado);
             }
         } else {
-            realizarEvaluacionesPredeterminadas(scanner, cursoSeleccionado);
-        }
-    } else {
-        System.out.println("Opción de área no válida.");
-    }
-}
-
-private void realizarEvaluacion(Scanner scanner, Evaluacion evaluacion) {
-    System.out.println("Evaluación: " + evaluacion.getTitulo());
-    ArrayList<String> preguntas = evaluacion.getPreguntas();
-    ArrayList<String[]> opciones = evaluacion.getOpciones();
-    ArrayList<Integer> respuestasCorrectas = evaluacion.getRespuestasCorrectas();
-
-    int aciertos = 0;
-    for (int i = 0; i < preguntas.size(); i++) {
-        System.out.println(preguntas.get(i));
-        for (int j = 0; j < opciones.get(i).length; j++) {
-            System.out.println((j + 1) + ". " + opciones.get(i)[j]);
-        }
-        System.out.print("Seleccione la opción correcta: ");
-        int respuesta = scanner.nextInt() - 1; // Convertir opción 1=a, 2=b, etc.
-        if (respuesta == respuestasCorrectas.get(i)) {
-            aciertos++;
+            System.out.println("Opción de área no válida.");
         }
     }
-    double calificacion = (aciertos / (double) preguntas.size()) * 10;
-    System.out.println("Ha completado la evaluación con una calificación de: " + calificacion);
-}
 
-private void realizarEvaluacionesPredeterminadas(Scanner scanner, Curso cursoSeleccionado) {
-    System.out.println("Realizando evaluación predeterminada...");
-    int aciertos = 0;
-        switch (cursoSeleccionado.gettitulo()) {
-                case "Ciencias físico-matemáticas y de la ingeniería":
-                    aciertos += realizarCuestionario(scanner, new String[]{
-                        "¿Cuál es el resultado de 2+2?",
-                        "¿Qué estudia la física?",
-                        "¿Cual de estos es un lenguaje de programación?"
-                    }, new String[][]{
-                        {"a) 3", "b) 4", "c) 5"},
-                        {"a) El universo", "b) La sociedad", "c) La vida"},
-                        {"a) HTML", "b) Java", "c) C--"}
-                    }, new int[]{1, 0, 1});
-                    break;
-                case "Ciencias biológicas, químicas y de la salud":
-                    aciertos += realizarCuestionario(scanner, new String[]{
-                        "¿Qué molécula lleva oxígeno en la sangre?",
-                        "¿Cuál es el órgano más grande del cuerpo humano?",
-                        "¿Qué define la fisiología?"
-                    }, new String[][]{
-                        {"a) ADN", "b) Hemoglobina", "c) Insulina"},
-                        {"a) Hígado", "b) Piel", "c) Corazón"},
-                        {"a) La estructura", "b) La función", "c) La enfermedad"}
-                    }, new int[]{1, 1, 1});
-                    break;
-                case "Ciencias Sociales":
-                    aciertos += realizarCuestionario(scanner, new String[]{
-                        "¿Qué estudia la sociología?",
-                        "¿Cuál es el poder judicial en México?",
-                        "¿Qué significa RI en ciencias políticas?"
-                    }, new String[][]{
-                        {"a) Individuos", "b) Sociedad", "c) Economía"},
-                        {"a) Presidencia", "b) Congreso", "c) Suprema Corte"},
-                        {"a) Relaciones Internacionales", "b) Relaciones Industriales", "c) Redes Internacionales"}
-                    }, new int[]{1, 2, 0});
-                    break;
-                case "Humanidades y Artes":
-                    aciertos += realizarCuestionario(scanner, new String[]{
-                        "¿Qué autor escribió 'Don Quijote'?",
-                        "¿Qué significa la proporción áurea?",
-                        "¿Quién es conocido como el 'padre de la música clásica'?"
-                    }, new String[][]{
-                        {"a) Shakespeare", "b) Cervantes", "c) Homero"},
-                        {"a) Patrón estético", "b) Color dorado", "c) Escala musical"},
-                        {"a) Mozart", "b) Beethoven", "c) Bach"}
-                    }, new int[]{1, 0, 2});
-                    break;
-                default:
-                    System.out.println("Área no válida.");
-                    return;
+    private void realizarEvaluacion(Scanner scanner, Evaluacion evaluacion) {
+        System.out.println("Evaluación: " + evaluacion.getTitulo());
+        ArrayList<String> preguntas = evaluacion.getPreguntas();
+        ArrayList<String[]> opciones = evaluacion.getOpciones();
+        ArrayList<Integer> respuestasCorrectas = evaluacion.getRespuestasCorrectas();
+
+        int aciertos = 0;
+        for (int i = 0; i < preguntas.size(); i++) {
+            System.out.println(preguntas.get(i));
+            for (int j = 0; j < opciones.get(i).length; j++) {
+                System.out.println((j + 1) + ". " + opciones.get(i)[j]);
             }
+            System.out.print("Seleccione la opción correcta: ");
+            int respuesta = scanner.nextInt() - 1; // Convertir opción 1=a, 2=b, etc.
+            if (respuesta == respuestasCorrectas.get(i)) {
+                aciertos++;
+            }
+        }
+        double calificacion = (aciertos / (double) preguntas.size()) * 10;
+        System.out.println("Ha completado la evaluación con una calificación de: " + calificacion);
+    }
 
-            double calificacion = (aciertos / 3.0) * 10;
-            cursoSeleccionado.setCalificacionEvaluacion(calificacion);
-            System.out.println("Ha completado la evaluación con una calificación de: " + calificacion);
+    private void realizarEvaluacionesPredeterminadas(Scanner scanner, Curso cursoSeleccionado) {
+        System.out.println("Realizando evaluación predeterminada...");
+        int aciertos = 0;
+        switch (cursoSeleccionado.gettitulo()) {
+            case "Ciencias físico-matemáticas y de la ingeniería":
+                aciertos += realizarCuestionario(scanner, new String[]{
+                    "¿Cuál es el resultado de 2+2?",
+                    "¿Qué estudia la física?",
+                    "¿Cual de estos es un lenguaje de programación?"
+                }, new String[][]{
+                    {"a) 3", "b) 4", "c) 5"},
+                    {"a) El universo", "b) La sociedad", "c) La vida"},
+                    {"a) HTML", "b) Java", "c) C--"}
+                }, new int[]{1, 0, 1});
+                break;
+            case "Ciencias biológicas, químicas y de la salud":
+                aciertos += realizarCuestionario(scanner, new String[]{
+                    "¿Qué molécula lleva oxígeno en la sangre?",
+                    "¿Cuál es el órgano más grande del cuerpo humano?",
+                    "¿Qué define la fisiología?"
+                }, new String[][]{
+                    {"a) ADN", "b) Hemoglobina", "c) Insulina"},
+                    {"a) Hígado", "b) Piel", "c) Corazón"},
+                    {"a) La estructura", "b) La función", "c) La enfermedad"}
+                }, new int[]{1, 1, 1});
+                break;
+            case "Ciencias Sociales":
+                aciertos += realizarCuestionario(scanner, new String[]{
+                    "¿Qué estudia la sociología?",
+                    "¿Cuál es el poder judicial en México?",
+                    "¿Qué significa RI en ciencias políticas?"
+                }, new String[][]{
+                    {"a) Individuos", "b) Sociedad", "c) Economía"},
+                    {"a) Presidencia", "b) Congreso", "c) Suprema Corte"},
+                    {"a) Relaciones Internacionales", "b) Relaciones Industriales", "c) Redes Internacionales"}
+                }, new int[]{1, 2, 0});
+                break;
+            case "Humanidades y Artes":
+                aciertos += realizarCuestionario(scanner, new String[]{
+                    "¿Qué autor escribió 'Don Quijote'?",
+                    "¿Qué significa la proporción áurea?",
+                    "¿Quién es conocido como el 'padre de la música clásica'?"
+                }, new String[][]{
+                    {"a) Shakespeare", "b) Cervantes", "c) Homero"},
+                    {"a) Patrón estético", "b) Color dorado", "c) Escala musical"},
+                    {"a) Mozart", "b) Beethoven", "c) Bach"}
+                }, new int[]{1, 0, 2});
+                break;
+            default:
+                System.out.println("Área no válida.");
+                return;
         }
 
+        double calificacion = (aciertos / 3.0) * 10;
+        cursoSeleccionado.setCalificacionEvaluacion(calificacion);
+        System.out.println("Ha completado la evaluación con una calificación de: " + calificacion);
+    }
 
     private int realizarCuestionario(Scanner scanner, String[] preguntas, String[][] opciones, int[] respuestasCorrectas) {
         int aciertos = 0;
@@ -398,7 +370,6 @@ private void realizarEvaluacionesPredeterminadas(Scanner scanner, Curso cursoSel
         }
         return aciertos;
     }
-
 
     public void consultarHistorial(ArrayList<Curso> Cursos) {
         System.out.println("Consultando historial del usuario...");
@@ -420,7 +391,6 @@ private void realizarEvaluacionesPredeterminadas(Scanner scanner, Curso cursoSel
         }
     }
 
-    
     public void tomarAsesoria(Scanner scanner, ArrayList<Curso> Cursos) {
         System.out.println("Seleccione el área en la que desea tomar asesoría:");
         for (int i = 0; i < Cursos.size(); i++) {
@@ -465,7 +435,7 @@ private void realizarEvaluacionesPredeterminadas(Scanner scanner, Curso cursoSel
                     String materiaSeleccionada = materias.get(seleccionMateria - 1);
                     System.out.println("Iniciando la clase de " + materiaSeleccionada + " con el profesor " + profesorSeleccionado + "...");
                     System.out.println("Bienvenidos a la clase de " + materiaSeleccionada + ". ¡Espero que sea de gran utilidad!");
-                    System.out.println("Tu racha de dias ha aumentado a " + (Racha+1) + ".");
+                    System.out.println("Tu racha de dias ha aumentado a " + (Racha + 1) + ".");
                     Racha++;
                     System.out.println("¿Qué desea hacer ahora?");
                     System.out.println("1. Volver al menú principal");
@@ -489,7 +459,6 @@ private void realizarEvaluacionesPredeterminadas(Scanner scanner, Curso cursoSel
             System.out.println("Opción de área no válida.");
         }
     }
-    
 
     public void mostrarDatos() {
         System.out.println("ID: " + id);
@@ -503,21 +472,28 @@ private void realizarEvaluacionesPredeterminadas(Scanner scanner, Curso cursoSel
 }
 
 class Tutor extends Usuario {
+
     private String especialidad;
     private String disponibilidad;
     private ArrayList<Evaluacion> evaluaciones;
-    private ArrayList<Progreso<Evaluacion>> progresoEvaluaciones;
 
     public Tutor(String id, String nombre, String apellido, String correo, String contraseña, String fechaNacimiento, Sexo sexo) {
         super(id, nombre, apellido, correo, contraseña, fechaNacimiento, sexo, Usuarios.Profesor);
         this.evaluaciones = new ArrayList<>();
-        this.progresoEvaluaciones = new ArrayList<>();
-        this.especialidad = especialidad;
-        this.disponibilidad = disponibilidad
+        this.especialidad = "Por Definir";
+        this.disponibilidad = "Por Definir";
     }
 
-   
-        public void crearEvaluacion(Scanner scanner) {
+    public void asignarEstudiante() {
+    }
+
+    public void consultarProgreso() {
+    }
+
+    public void agendarSesion() {
+    }
+
+    public void crearEvaluacion(Scanner scanner) {
         System.out.println("Ingrese el título de la evaluación:");
         String titulo = scanner.nextLine();
         System.out.println("Ingrese el puntaje máximo:");
@@ -531,7 +507,9 @@ class Tutor extends Usuario {
         while (true) {
             System.out.println("Ingrese una pregunta (o 'fin' para terminar):");
             String pregunta = scanner.nextLine();
-            if (pregunta.equalsIgnoreCase("fin")) break;
+            if (pregunta.equalsIgnoreCase("fin")) {
+                break;
+            }
 
             preguntas.add(pregunta);
             String[] opcionesPregunta = new String[3];
@@ -549,32 +527,16 @@ class Tutor extends Usuario {
 
         Evaluacion evaluacion = new Evaluacion(titulo, puntajeMaximo, preguntas, opciones, respuestasCorrectas, this.getNombre());
         evaluaciones.add(evaluacion);
-
-        // Crear un nuevo progreso asociado a la evaluación
-        Progreso<Evaluacion> progreso = new Progreso<>(titulo, evaluacion);
-        progresoEvaluaciones.add(progreso);
-
-        System.out.println("Evaluación y progreso creado con éxito.");
+        System.out.println("Evaluación creada con éxito.");
     }
 
-    public void consultarProgreso() {
-        System.out.println("Consultando progreso de las evaluaciones:");
-        if (progresoEvaluaciones.isEmpty()) {
-            System.out.println("No hay evaluaciones con progreso registrado.");
-        } else {
-            for (Progreso<Evaluacion> progreso : progresoEvaluaciones) {
-                progreso.consultarProgreso();
-            }
-        }
-    }
-}
     public ArrayList<Evaluacion> getEvaluaciones() {
         return evaluaciones;
     }
 }
 
-
 class Administrador extends Usuario {
+
     private String especialidad;
 
     public Administrador(String id, String nombre, String apellido, String correo, String contraseña, String fechaNacimiento, Sexo sexo) {
@@ -586,10 +548,12 @@ class Administrador extends Usuario {
         return "admin123".equals(contraseñaAdmin);
     }
 
-    public void verEstadisticas() {}
+    public void verEstadisticas() {
+    }
 }
 
 public class Main {
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         ArrayList<Usuario> usuarios = new ArrayList<>();
@@ -651,7 +615,7 @@ public class Main {
                         System.out.println("3. Tomar asesorías");
                         int opcionAdicional = scanner.nextInt();
                         scanner.nextLine();
-                                                if (opcionAdicional == 1) { // Evaluación
+                        if (opcionAdicional == 1) { // Evaluación
                             if (usuario instanceof Tutor) {
                                 System.out.println("Usted es un profesor. ¿Desea crear una evaluación?");
                                 System.out.println("1. Sí");
@@ -707,115 +671,115 @@ public class Main {
                     }
                     break;
 
-case Opciones.CREAR_CUENTA:
-    System.out.println("Ingrese su nombre:");
-    nombre = scanner.nextLine();
-    System.out.println("Ingrese su apellido:");
-    String apellido = scanner.nextLine();
-    System.out.println("Ingrese su correo:");
-    String correo = scanner.nextLine();
-    System.out.println("Ingrese su contraseña:");
-    contraseña = scanner.nextLine();
-    System.out.println("Ingrese su fecha de nacimiento (dd/mm/aaaa):");
-    String fechaNacimiento = scanner.nextLine();
+                case Opciones.CREAR_CUENTA:
+                    System.out.println("Ingrese su nombre:");
+                    nombre = scanner.nextLine();
+                    System.out.println("Ingrese su apellido:");
+                    String apellido = scanner.nextLine();
+                    System.out.println("Ingrese su correo:");
+                    String correo = scanner.nextLine();
+                    System.out.println("Ingrese su contraseña:");
+                    contraseña = scanner.nextLine();
+                    System.out.println("Ingrese su fecha de nacimiento (dd/mm/aaaa):");
+                    String fechaNacimiento = scanner.nextLine();
 
-    System.out.println("Seleccione su sexo:");
-    System.out.println("1. Hombre");
-    System.out.println("2. Mujer");
-    System.out.println("3. No especificar");
-    int opcionSexo = scanner.nextInt();
-    scanner.nextLine();
-    Usuario.Sexo sexo = opcionSexo == 1 ? Usuario.Sexo.Hombre : (opcionSexo == 2 ? Usuario.Sexo.Mujer : Usuario.Sexo.NoEspecificar);
+                    System.out.println("Seleccione su sexo:");
+                    System.out.println("1. Hombre");
+                    System.out.println("2. Mujer");
+                    System.out.println("3. No especificar");
+                    int opcionSexo = scanner.nextInt();
+                    scanner.nextLine();
+                    Usuario.Sexo sexo = opcionSexo == 1 ? Usuario.Sexo.Hombre : (opcionSexo == 2 ? Usuario.Sexo.Mujer : Usuario.Sexo.NoEspecificar);
 
-    System.out.println("Seleccione su tipo de usuario:");
-    System.out.println("1. Estudiante");
-    System.out.println("2. Profesor");
-    System.out.println("3. Administrador");
-    int opcionTipoUsuario = scanner.nextInt();
-    scanner.nextLine();
+                    System.out.println("Seleccione su tipo de usuario:");
+                    System.out.println("1. Estudiante");
+                    System.out.println("2. Profesor");
+                    System.out.println("3. Administrador");
+                    int opcionTipoUsuario = scanner.nextInt();
+                    scanner.nextLine();
 
-    String id = "U" + System.currentTimeMillis();
-    if (opcionTipoUsuario == 1) {
-    Usuario nuevoUsuario = new Usuario(id, nombre, apellido, correo, contraseña, fechaNacimiento, sexo, Usuario.Usuarios.Estudiante);
-    usuarios.add(nuevoUsuario);
-    nuevoUsuario.crearCuenta();
-    } else if (opcionTipoUsuario == 2) {
-    Tutor nuevoTutor = new Tutor(id, nombre, apellido, correo, contraseña, fechaNacimiento, sexo);
-    usuarios.add(nuevoTutor);
-    nuevoTutor.crearCuenta();
-    } else if (opcionTipoUsuario == 3) {
-    System.out.println("Ingrese la contraseña especial para administrador:");
-    String contraseñaAdmin = scanner.nextLine();
-    if (Administrador.validarContraseñaAdmin(contraseñaAdmin)) {
-    Administrador nuevoAdmin = new Administrador(id, nombre, apellido, correo, contraseña, fechaNacimiento, sexo);
-    usuarios.add(nuevoAdmin);
-    nuevoAdmin.crearCuenta();
-    } else {
-    System.out.println("Contraseña especial incorrecta. No se puede crear la cuenta de administrador.");
-    }
-    }
-    break;
+                    String id = "U" + System.currentTimeMillis();
+                    if (opcionTipoUsuario == 1) {
+                        Usuario nuevoUsuario = new Usuario(id, nombre, apellido, correo, contraseña, fechaNacimiento, sexo, Usuario.Usuarios.Estudiante);
+                        usuarios.add(nuevoUsuario);
+                        nuevoUsuario.crearCuenta();
+                    } else if (opcionTipoUsuario == 2) {
+                        Tutor nuevoTutor = new Tutor(id, nombre, apellido, correo, contraseña, fechaNacimiento, sexo);
+                        usuarios.add(nuevoTutor);
+                        nuevoTutor.crearCuenta();
+                    } else if (opcionTipoUsuario == 3) {
+                        System.out.println("Ingrese la contraseña especial para administrador:");
+                        String contraseñaAdmin = scanner.nextLine();
+                        if (Administrador.validarContraseñaAdmin(contraseñaAdmin)) {
+                            Administrador nuevoAdmin = new Administrador(id, nombre, apellido, correo, contraseña, fechaNacimiento, sexo);
+                            usuarios.add(nuevoAdmin);
+                            nuevoAdmin.crearCuenta();
+                        } else {
+                            System.out.println("Contraseña especial incorrecta. No se puede crear la cuenta de administrador.");
+                        }
+                    }
+                    break;
 
-    case Opciones.EDITAR_CUENTA:
-    if (usuarios.isEmpty()) {
-    System.out.println("No hay ninguna cuenta creada. Cree una cuenta primero.");
-    } else {
-    System.out.println("Ingrese su nombre para editar la cuenta:");
-    nombre = scanner.nextLine();
-    System.out.println("Ingrese su contraseña actual:");
-    contraseña = scanner.nextLine();
+                case Opciones.EDITAR_CUENTA:
+                    if (usuarios.isEmpty()) {
+                        System.out.println("No hay ninguna cuenta creada. Cree una cuenta primero.");
+                    } else {
+                        System.out.println("Ingrese su nombre para editar la cuenta:");
+                        nombre = scanner.nextLine();
+                        System.out.println("Ingrese su contraseña actual:");
+                        contraseña = scanner.nextLine();
 
-    usuario = buscarUsuarioPorCredenciales(usuarios, nombre, contraseña);
-    if (usuario != null) {
-    System.out.println("Ingrese su nuevo correo:");
-    String nuevoCorreo = scanner.nextLine();
-    System.out.println("Ingrese su nueva contraseña:");
-    String nuevaContraseña = scanner.nextLine();
-    usuario.editarCuenta(nuevoCorreo, nuevaContraseña);
-    } else {
-    System.out.println("Usuario no encontrado. Verifique sus credenciales.");
-    }
-    }
-    break;
+                        usuario = buscarUsuarioPorCredenciales(usuarios, nombre, contraseña);
+                        if (usuario != null) {
+                            System.out.println("Ingrese su nuevo correo:");
+                            String nuevoCorreo = scanner.nextLine();
+                            System.out.println("Ingrese su nueva contraseña:");
+                            String nuevaContraseña = scanner.nextLine();
+                            usuario.editarCuenta(nuevoCorreo, nuevaContraseña);
+                        } else {
+                            System.out.println("Usuario no encontrado. Verifique sus credenciales.");
+                        }
+                    }
+                    break;
 
-    case Opciones.MEJORAR_SUSCRIPCION:
-    if (usuarios.isEmpty()) {
-    System.out.println("No hay ninguna cuenta creada. Cree una cuenta primero para poder suscribirse.");
-    } else {
-    System.out.println("Ingrese su nombre con el que se registró para mejorar su suscripción:");
-    nombre = scanner.nextLine();
-    System.out.println("Ahora ingrese su contraseña:");
-    contraseña = scanner.nextLine();
+                case Opciones.MEJORAR_SUSCRIPCION:
+                    if (usuarios.isEmpty()) {
+                        System.out.println("No hay ninguna cuenta creada. Cree una cuenta primero para poder suscribirse.");
+                    } else {
+                        System.out.println("Ingrese su nombre con el que se registró para mejorar su suscripción:");
+                        nombre = scanner.nextLine();
+                        System.out.println("Ahora ingrese su contraseña:");
+                        contraseña = scanner.nextLine();
 
-    usuario = buscarUsuarioPorCredenciales(usuarios, nombre, contraseña);
-    if (usuario != null) {
-    usuario.mejorarSuscripcion(scanner);
-    } else {
-    System.out.println("Usuario no encontrado. Verifique que haya escrito sus datos correctamente.");
-    }
-    }
-    break;
+                        usuario = buscarUsuarioPorCredenciales(usuarios, nombre, contraseña);
+                        if (usuario != null) {
+                            usuario.mejorarSuscripcion(scanner);
+                        } else {
+                            System.out.println("Usuario no encontrado. Verifique que haya escrito sus datos correctamente.");
+                        }
+                    }
+                    break;
 
-    case Opciones.SALIR:
-    System.out.println("Saliendo del sistema...");
-    break;
+                case Opciones.SALIR:
+                    System.out.println("Saliendo del sistema...");
+                    break;
 
-    default:
-    System.out.println("Opción no válida. Intente nuevamente.");
-    break;
-    }
-    } while (opcion != Opciones.SALIR);
+                default:
+                    System.out.println("Opción no válida. Intente nuevamente.");
+                    break;
+            }
+        } while (opcion != Opciones.SALIR);
 
-    scanner.close();
+        scanner.close();
     }
 
     // Método auxiliar para buscar un usuario por nombre y contraseña
     private static Usuario buscarUsuarioPorCredenciales(ArrayList<Usuario> usuarios, String nombre, String contraseña) {
-    for (Usuario usuario : usuarios) {
-    if (usuario.getNombre().equals(nombre) && usuario.getContraseña().equals(contraseña)) {
-    return usuario;
+        for (Usuario usuario : usuarios) {
+            if (usuario.getNombre().equals(nombre) && usuario.getContraseña().equals(contraseña)) {
+                return usuario;
+            }
+        }
+        return null;
     }
-    }
-    return null;
-    }
-    }
+}
