@@ -8,6 +8,7 @@ import Logic.ArchivoUsuarios;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import org.json.JSONObject;
+
 /**
  *
  * @author Angel
@@ -236,7 +237,7 @@ public class SignUp extends javax.swing.JFrame {
     }//GEN-LAST:event_tFechaActionPerformed
 
     private void jCalendar1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jCalendar1PropertyChange
-        if(evt.getOldValue()!=null){
+        if (evt.getOldValue() != null) {
             SimpleDateFormat ff = new SimpleDateFormat("dd/MM/yyyy");
             tFecha.setText(ff.format(jCalendar1.getCalendar().getTime()));
         }
@@ -247,63 +248,59 @@ public class SignUp extends javax.swing.JFrame {
     }//GEN-LAST:event_vSexoActionPerformed
 
     private void bRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRegistroActionPerformed
-                                      
-            tError.setText("");
-            JSONObject usuario = new JSONObject();
-            String texto = tNombre.getText().charAt(0) + tFecha.getText() + "123";
-            int anio=2024;
-            try {
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                Date date = sdf.parse(tFecha.getText()); // Convierte el String a Date
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(date);
-                anio = calendar.get(Calendar.YEAR); // Obtiene el año
-                System.out.println("El año es: " + anio);
-            } catch (Exception e) {
-                System.out.println("Error al procesar la fecha: " + e.getMessage());
-            }
-            
-            usuario.put("contraseña", tContra.getText());
-            usuario.put("correo", tCorreo.getText());
-            usuario.put("nombre", tNombre.getText());
-            usuario.put("fechaNacimiento", tFecha.getText());
-            usuario.put("sexo", vSexo.getSelectedItem());
-            usuario.put("id",texto);
-            usuario.put("tUser","Estudiante");
-            if("".equals(tContra.getText()) || tCorreo.getText().length()<5){
-                tError.setText("Contraseña no válida.\n Longitud mínima: 5.");
-                return;
-            }
-            else if("".equals(tCorreo.getText()) || !tCorreo.getText().contains("@")){
-                tError.setText("Correo no válido.");
-                return;
-            }
-            else if("".equals(tNombre.getText()) || tNombre.getText().length()<5){
-                tError.setText("Ingrese un nombre real.");
-                return;
-            }
-            else if(2024-anio <5 || 2024-anio>=125 ){
-                tError.setText("Edad inválida.");
-                return;
-            }
-            
-            boolean encontrado = ArchivoUsuarios.buscarUsuarioPorCorreo(tCorreo.getText());
-            if (encontrado) {
-                tError.setText("Correo electrónico ya registrado.");
-            } else {
-                ArchivoUsuarios.guardarUsuario(usuario);
-                System.out.println("Usuario Guardado");
-                
-            }
-        
+
+        tError.setText("");
+        JSONObject usuario = new JSONObject();
+        String texto = tNombre.getText().charAt(0) + tFecha.getText() + "123";
+        int anio = 2024;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Date date = sdf.parse(tFecha.getText()); // Convierte el String a Date
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            anio = calendar.get(Calendar.YEAR); // Obtiene el año
+            System.out.println("El año es: " + anio);
+        } catch (Exception e) {
+            System.out.println("Error al procesar la fecha: " + e.getMessage());
+        }
+
+        usuario.put("contraseña", tContra.getText());
+        usuario.put("correo", tCorreo.getText());
+        usuario.put("nombre", tNombre.getText());
+        usuario.put("fechaNacimiento", tFecha.getText());
+        usuario.put("sexo", vSexo.getSelectedItem());
+        usuario.put("id", texto);
+        usuario.put("tUser", "Estudiante");
+        if ("".equals(tContra.getText()) || tCorreo.getText().length() < 5) {
+            tError.setText("Contraseña no válida.\n Longitud mínima: 5.");
+            return;
+        } else if ("".equals(tCorreo.getText()) || !tCorreo.getText().contains("@")) {
+            tError.setText("Correo no válido.");
+            return;
+        } else if ("".equals(tNombre.getText()) || tNombre.getText().length() < 5) {
+            tError.setText("Ingrese un nombre real.");
+            return;
+        } else if (2024 - anio < 5 || 2024 - anio >= 125) {
+            tError.setText("Edad inválida.");
+            return;
+        }
+
+        boolean encontrado = ArchivoUsuarios.buscarUsuarioPorCorreo(tCorreo.getText());
+        if (encontrado) {
+            tError.setText("Correo electrónico ya registrado.");
+        } else {
+            ArchivoUsuarios.guardarUsuario(usuario);
+            System.out.println("Usuario Guardado");
+
+        }
+
     }//GEN-LAST:event_bRegistroActionPerformed
 
     private void bRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRegresarActionPerformed
         // TODO add your handling code here:
-        GUIUtil.abrirVentana(Login.class,this);
+        GUIUtil.abrirVentana(Login.class, this);
     }//GEN-LAST:event_bRegresarActionPerformed
 
- 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bRegistro;

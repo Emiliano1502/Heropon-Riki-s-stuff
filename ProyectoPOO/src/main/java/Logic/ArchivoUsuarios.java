@@ -66,7 +66,7 @@ public class ArchivoUsuarios {
         }
         return null; // Usuario no encontrado
     }
-    
+
     public static boolean buscarUsuarioPorCorreo(String correo) {
         try (FileReader reader = new FileReader(FILE_NAME)) {
             // Leer el contenido del archivo JSON
@@ -95,5 +95,51 @@ public class ArchivoUsuarios {
 
         return false; // Usuario no encontrado
     }
-}
 
+    public static boolean actualizarUsuarioPorCorreo(String correo, JSONObject usuarioActualizado) {
+        // Paso 1: Crear el archivo temporal "prueba.txt"
+        File archivoTemporal = new File("prueba.txt");
+
+        try {
+            // Leer los usuarios actuales desde el archivo BD.txt
+            List<JSONObject> usuarios = leerUsuarios();
+
+            // Paso 2: Iterar sobre los usuarios existentes
+            boolean usuarioEncontrado = false;
+            List<JSONObject> usuariosActualizados = new ArrayList<>();
+
+            for (JSONObject usuario : usuarios) {
+                // Si el correo coincide, actualiza los datos del usuario
+                if (usuario.getString("correo").equals(correo)) {
+                    usuariosActualizados.add(usuarioActualizado);
+                    usuarioEncontrado = true;
+                } else {
+                    // Si no, conserva el usuario original
+                    usuariosActualizados.add(usuario);
+                }
+            }
+
+            if (!usuarioEncontrado) {
+                System.out.println("Usuario no encontrado.");
+                return false; // Si no se encuentra el usuario con ese correo
+            }
+
+            // Paso 3: Guardar el arreglo de usuarios actualizados en el archivo temporal
+            try (FileWriter writer = new FileWriter(archivoTemporal)) {
+                writer.write(usuariosActualizados.toString());
+            }
+
+            // Paso 4: Renombrar el archivo "prueba.txt" a "BD.txt"
+            File archivoOriginal = new File("BD.txt");
+            if (archivoOriginal.exists()) {
+                archivoOriginal.delete(); // Elimina el archivo original
+            }
+            archivoTemporal.renameTo(archivoOriginal); // Renombra el archivo temporal
+
+            return true; // Actualización exitosa
+        } catch (IOException e) {
+            System.out.println("Error al procesar los archivos: " + e.getMessage());
+            return false;
+        }
+    }
+}

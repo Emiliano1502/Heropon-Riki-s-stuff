@@ -1,1 +1,1 @@
-[{"tUser":"Estudiante","fechaNacimiento":"09/11/2006","correo":"yo@gmail.com","id":"Y09/11/2006123","sexo":"Hombre","nombre":"Yooo asea","contraseña":"Yo"}]
+[{"tUser":"Estudiante","fechaNacimiento":"09/11/2006","correo":"yo@gmail.com","id":"Y09/11/2006123","sexo":"Hombre","nombre":"Yooo asea","contraseña":"Yo"}, {"tUser":"Estudiante","fechaNacimiento":"08/11/2006","correo":"CorreoP@gmail.com","id":"P08/11/2006123","sexo":"Hombre","nombre":"Pablo Martinez","contraseña":"123"}]

@@ -8,12 +8,10 @@ import org.json.JSONObject;
 
 public class Login extends javax.swing.JFrame {
 
-    
     public Login() {
         initComponents();
     }
-    
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -216,17 +214,10 @@ public class Login extends javax.swing.JFrame {
         if (usuarioJson != null) {
             // Crear el objeto Usuario
             Usuario usuario;
-            usuario = new Usuario(
-                    usuarioJson.getString("id"),
-                    usuarioJson.getString("nombre"),
-                    usuarioJson.getString("correo"),
-                    usuarioJson.getString("contraseña"),
-                    usuarioJson.getString("fechaNacimiento"),
-                    Usuario.Sexo.valueOf(usuarioJson.getString("sexo")),
-               Usuario.Usuarios.valueOf(usuarioJson.getString("tUser"))
-            );
+            usuario = CreadorDeUsuario.crearUsuario(usuarioJson.getString("id"), usuarioJson.getString("nombre"), usuarioJson.getString("correo"), usuarioJson.getString("contraseña"), usuarioJson.getString("fechaNacimiento"), Usuario.Sexo.valueOf(usuarioJson.getString("sexo")), Usuario.Usuarios.valueOf(usuarioJson.getString("tUser")));
+            
             Menu.setUsuario(usuario); // Configura el usuario en la clase Menu
-            GUIUtil.abrirVentana(Menu.class,this);
+            GUIUtil.abrirVentana(Menu.class, this);
         } else {
             tPass.setText("Usuario o contraseña inválido");
         }
@@ -234,7 +225,7 @@ public class Login extends javax.swing.JFrame {
 
     private void bSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSignUpActionPerformed
         // TODO add your handling code here:
-        GUIUtil.abrirVentana(SignUp.class,this);
+        GUIUtil.abrirVentana(SignUp.class, this);
     }//GEN-LAST:event_bSignUpActionPerformed
 
     private void bForgotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bForgotActionPerformed
@@ -262,19 +253,19 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_bForgotActionPerformed
 
     private void bContraVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bContraVActionPerformed
-    if(bContraV.isSelected()){
-        vContra.setEchoChar((char)0);
-    } else {
-        vContra.setEchoChar('*');
-    }        
+        if (bContraV.isSelected()) {
+            vContra.setEchoChar((char) 0);
+        } else {
+            vContra.setEchoChar('*');
+        }
     }//GEN-LAST:event_bContraVActionPerformed
 
     private void vUsuarioFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_vUsuarioFocusGained
-    // Cuando el cuadro de texto obtiene el foco
-    if (vUsuario.getText().equals("Ingrese su correo")) {
-        vUsuario.setText(""); // Borra el contenido
-        vUsuario.setForeground(Color.BLACK); // Cambia el color a negro
-    }
+        // Cuando el cuadro de texto obtiene el foco
+        if (vUsuario.getText().equals("Ingrese su correo")) {
+            vUsuario.setText(""); // Borra el contenido
+            vUsuario.setForeground(Color.BLACK); // Cambia el color a negro
+        }
     }//GEN-LAST:event_vUsuarioFocusGained
 
     private void vContraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vContraActionPerformed
@@ -282,7 +273,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_vContraActionPerformed
 
     private void vContraFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_vContraFocusGained
-         char[] passwordArray = vContra.getPassword(); // Obtén el arreglo de caracteres de vContra
+        char[] passwordArray = vContra.getPassword(); // Obtén el arreglo de caracteres de vContra
         String password = new String(passwordArray);  // Convierte el arreglo a String para compararlo
 
         if (password.equals("Ingrese una contraseña")) { // Compara con la cadena deseada
