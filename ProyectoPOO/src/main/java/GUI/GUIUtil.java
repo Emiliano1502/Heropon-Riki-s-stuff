@@ -2,9 +2,11 @@ package GUI;
 
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.*;
 import java.io.File;
-import java.io.IOException;
 
 public class GUIUtil {
 
@@ -39,28 +41,23 @@ public class GUIUtil {
             }
         }
     }
-}
+    
+    // Clase para cargar una ventana con botones
+    public static class CambiaPanel {
 
-class MostrarHTMLPanel extends JPanel {
+        private JPanel container;
+        private JPanel content;
 
-    public MostrarHTMLPanel() {
-        setLayout(new BorderLayout());
+        public CambiaPanel(JPanel container, JPanel content) {
+            this.container = container;
+            this.content = content;
+            this.container.removeAll();
+            this.container.revalidate();
+            this.container.repaint();
 
-        // Crear un JEditorPane para cargar el HTML
-        JEditorPane editorPane = new JEditorPane();
-        editorPane.setEditable(false); // Evitar que sea editable
-
-        try {
-            // Cargar el archivo HTML desde la carpeta A1
-            File archivoHTML = new File("A1/archivo.html"); // Cambia "archivo.html" al nombre de tu archivo
-            editorPane.setPage(archivoHTML.toURI().toURL());
-        } catch (IOException e) {
-            editorPane.setText("No se pudo cargar el archivo HTML.");
-            e.printStackTrace();
+            this.container.add(this.content);
+            this.container.revalidate();
+            this.container.repaint();
         }
-
-        // Agregar un JScrollPane para manejar el desplazamiento
-        JScrollPane scrollPane = new JScrollPane(editorPane);
-        add(scrollPane, BorderLayout.CENTER);
     }
 }

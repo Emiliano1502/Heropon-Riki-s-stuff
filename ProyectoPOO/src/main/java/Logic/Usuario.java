@@ -45,13 +45,14 @@ class Progreso<T> {
         return progreso;
     }
 
-    public void actualizarProgreso(int progresoAdicional) {
+    public void actualizarProgreso(int progresoAdicional, String n) {
         if (progresoAdicional < 0) {
             System.out.println("El progreso adicional no puede ser negativo.");
             return;
         }
         this.progreso = Math.min(100, this.progreso + progresoAdicional); // Evitar que supere el 100%
         this.ultimaActividad = new Date(); // Actualiza la fecha de la última actividad
+        this.titulo=n;
         System.out.println("El progreso de la actividad '" + titulo + "' se ha actualizado a " + this.progreso + "%.");
     }
 
@@ -269,7 +270,7 @@ public class Usuario implements User {
         double calificacion = (aciertos / (double) preguntas.size()) * 10;
         System.out.println("Ha completado la evaluación con una calificación de: " + calificacion);
         Progreso<Evaluacion> progreso = new Progreso<>(evaluacion.getTitulo(), evaluacion);
-        progreso.actualizarProgreso(100);
+        progreso.actualizarProgreso(100, "Evaluación");
         progresos.add(progreso);
     }
 
@@ -331,7 +332,7 @@ public class Usuario implements User {
         System.out.println("Ha completado la evaluación con una calificación de: " + calificacion);
         // Actualizar progreso a 100%
         Progreso<Curso> progreso = new Progreso<>(cursoSeleccionado.gettitulo(), cursoSeleccionado);
-        progreso.actualizarProgreso(100);
+        progreso.actualizarProgreso(100, "Evaluación");
         progresos.add(progreso);
     }
 
@@ -442,6 +443,15 @@ public class Usuario implements User {
         System.out.println("Sexo: " + sexo);
         System.out.println("Tipo de Usuario: " + tipoUsuario);
         System.out.println("Suscripción: " + suscripcion);
+    }
+    
+    //Redefinición de operadores
+    public boolean equals(Usuario u){
+        return (this.correo.toUpperCase().equals(u.correo.toUpperCase()) && this.id.equals(u.id));
+    }
+    
+    public void agregarProgreso(Progreso<?> progreso) {
+        progresos.add(progreso);
     }
 }
 

@@ -4,8 +4,11 @@
  */
 package GUI;
 
+import GUI.GUIUtil.CambiaPanel;
 import Logic.ArchivoUsuarios;
 import Logic.Usuario;
+import java.awt.*;
+import javax.swing.*;
 import org.json.JSONObject;
 
 /**
@@ -21,12 +24,14 @@ public class Menu extends javax.swing.JFrame {
      */
     public Menu() {
         initComponents();
+        new CambiaPanel(jPanel3,new Area1("A1"));
     }
 
     public static void setUsuario(Usuario usuario) {
         Menu.usuario = usuario;
     }
-
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,6 +43,7 @@ public class Menu extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         lUser = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         bA5 = new javax.swing.JButton();
         jMenu = new javax.swing.JLabel();
@@ -59,6 +65,9 @@ public class Menu extends javax.swing.JFrame {
 
         lUser.setText("Hola: USUARIO !");
 
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setLayout(new javax.swing.BoxLayout(jPanel3, javax.swing.BoxLayout.LINE_AXIS));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -67,13 +76,19 @@ public class Menu extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addComponent(lUser)
                 .addContainerGap(490, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(lUser)
-                .addContainerGap(557, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 551, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jPanel2.setBackground(new java.awt.Color(0, 153, 153));
@@ -198,8 +213,7 @@ public class Menu extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -208,14 +222,17 @@ public class Menu extends javax.swing.JFrame {
 
     private void bA2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bA2ActionPerformed
         // TODO add your handling code here:
+        new CambiaPanel(jPanel3,new Area1("A2"));
     }//GEN-LAST:event_bA2ActionPerformed
 
     private void bA3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bA3ActionPerformed
         // TODO add your handling code here:
+        new CambiaPanel(jPanel3,new Area1("A3"));
     }//GEN-LAST:event_bA3ActionPerformed
 
     private void bA4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bA4ActionPerformed
         // TODO add your handling code here:
+        new CambiaPanel(jPanel3,new Area1("A4"));
     }//GEN-LAST:event_bA4ActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -225,6 +242,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void bA5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bA5ActionPerformed
         // TODO add your handling code here:
+        new CambiaPanel(jPanel3,new Area1("A1"));
     }//GEN-LAST:event_bA5ActionPerformed
 
     private void bA6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bA6ActionPerformed
@@ -277,6 +295,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JLabel jMenu;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel lUser;
     // End of variables declaration//GEN-END:variables
 }

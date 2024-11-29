@@ -265,7 +265,7 @@ public class SignUp extends javax.swing.JFrame {
         }
 
         usuario.put("contraseña", tContra.getText());
-        usuario.put("correo", tCorreo.getText());
+        usuario.put("correo", tCorreo.getText().toUpperCase());
         usuario.put("nombre", tNombre.getText());
         usuario.put("fechaNacimiento", tFecha.getText());
         usuario.put("sexo", vSexo.getSelectedItem());

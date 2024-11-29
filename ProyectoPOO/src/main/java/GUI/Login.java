@@ -197,7 +197,7 @@ public class Login extends javax.swing.JFrame {
 
     private void bSignInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSignInActionPerformed
         // TODO add your handling code here:
-        String correo = vUsuario.getText();
+        String correo = vUsuario.getText().toUpperCase();
         String contraseña = new String(vContra.getPassword());
 
         // Validar campos vacíos
@@ -207,7 +207,7 @@ public class Login extends javax.swing.JFrame {
 
         // Buscar el usuario por correo y validar la contraseña
         JSONObject usuarioJson = ArchivoUsuarios.leerUsuarios().stream()
-                .filter(u -> u.getString("correo").equals(correo) && u.getString("contraseña").equals(contraseña))
+                .filter(u -> u.getString("correo").toUpperCase().equals(correo) && u.getString("contraseña").equals(contraseña))
                 .findFirst()
                 .orElse(null);
 
@@ -239,7 +239,7 @@ public class Login extends javax.swing.JFrame {
 
         // Buscar el usuario por correo en BD.txt
         JSONObject usuarioJson = ArchivoUsuarios.leerUsuarios().stream()
-                .filter(u -> u.getString("correo").equals(correo))
+                .filter(u -> u.getString("correo").toUpperCase().equals(correo))
                 .findFirst()
                 .orElse(null);
 

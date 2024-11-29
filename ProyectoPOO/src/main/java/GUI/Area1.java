@@ -4,18 +4,91 @@
  */
 package GUI;
 
+import java.awt.*;
+import java.io.File;
+import javax.swing.*;
+
 /**
  *
  * @author Angel
  */
 public class Area1 extends javax.swing.JPanel {
-
+    private JPanel buttonPanel; // Panel para organizar los botones
     /**
      * Creates new form Area1
      */
-    public Area1() {
+    public Area1(String folderName) {
         initComponents();
+        if(folderName.equals("A1")){
+            titulo.setText("Físico Matemáticas e Ingenierías");
+            titulo.setForeground(Color.red);
+        }
+        else if(folderName.equals("A2")){
+            titulo.setText("Ciencias Biológicas, Químicas y de la Salud");
+            titulo.setForeground(Color.GREEN);
+        }
+        else if(folderName.equals("A3")){
+            titulo.setText("Ciencias Sociales");
+            titulo.setForeground(Color.BLUE);
+        }
+        else{
+            titulo.setText("Humanidades y de las Artes");
+            titulo.setForeground(Color.MAGENTA);
+        }
+        cargarBotones(folderName);
     }
+    private void cargarBotones(String folderPath) {
+        File folder = new File(folderPath);
+
+        if (folder.exists() && folder.isDirectory()) {
+            File[] subFolders = folder.listFiles(File::isDirectory); // Filtrar solo directorios
+
+            if (subFolders != null) {
+                // Crear un panel para contener los botones
+                JPanel buttonPanel = new JPanel();
+                // Configuramos un GridLayout con 3 columnas (hasta 3 botones por fila)
+                buttonPanel.setLayout(new GridLayout(0, 3, 10, 10)); // 3 botones por fila, espaciado de 10 píxeles entre ellos
+
+                // Crear un botón por cada subcarpeta
+                for (File subFolder : subFolders) {
+                    JButton button = new JButton(subFolder.getName());
+                    button.addActionListener(evt -> {
+                        JOptionPane.showMessageDialog(this, 
+                            "Has seleccionado: " + subFolder.getName(), 
+                            "Información", 
+                            JOptionPane.INFORMATION_MESSAGE);
+                        button.setBackground(Color.GREEN);
+                    });
+
+                    // Configuramos un tamaño preferido para que los botones no se estiren demasiado
+                    button.setPreferredSize(new Dimension(150, 40));
+
+                    buttonPanel.add(button);
+                }
+
+                // Aseguramos que el panel de botones tenga el tamaño adecuado
+                buttonPanel.revalidate();
+                buttonPanel.repaint();
+
+                // Aseguramos que el panel de botones se ajuste al JScrollPane
+                scroll.setViewportView(buttonPanel);  // Reemplazamos el contenido del JScrollPane con el buttonPanel
+            } else {
+                JOptionPane.showMessageDialog(this, 
+                    "La carpeta está vacía o no tiene subcarpetas.", 
+                    "Advertencia", 
+                    JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, 
+                "El directorio especificado no existe: " + folderPath, 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -26,34 +99,46 @@ public class Area1 extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        titulo = new javax.swing.JLabel();
+        scroll = new javax.swing.JScrollPane();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel1.setFont(new java.awt.Font("Ravenscroft", 0, 48)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 51, 0));
-        jLabel1.setText("Físico Matemáticas e Ingenierías");
+        titulo.setFont(new java.awt.Font("Ravenscroft", 0, 48)); // NOI18N
+        titulo.setForeground(new java.awt.Color(255, 51, 0));
+        titulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titulo.setText("Físico Matemáticas e Ingenierías");
+
+        scroll.setBackground(new java.awt.Color(255, 255, 255));
+        scroll.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scroll.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scroll.setPreferredSize(new java.awt.Dimension(50, 50));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(194, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(194, 194, 194))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(titulo, javax.swing.GroupLayout.DEFAULT_SIZE, 573, Short.MAX_VALUE)
+                    .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addComponent(jLabel1)
-                .addContainerGap(508, Short.MAX_VALUE))
+                .addComponent(titulo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane scroll;
+    private javax.swing.JLabel titulo;
     // End of variables declaration//GEN-END:variables
 }
