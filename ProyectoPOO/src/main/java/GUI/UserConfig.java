@@ -7,7 +7,10 @@ package GUI;
 import static GUI.GUIUtil.setEditable;
 import Logic.CreadorDeUsuario;
 import Logic.Usuario;
+import Logic.Tutor;
 import Logic.ArchivoUsuarios;
+import java.awt.GridLayout;
+import javax.swing.*;
 import org.json.JSONObject;
 
 /**
@@ -15,7 +18,76 @@ import org.json.JSONObject;
  * @author Angel
  */
 public class UserConfig extends javax.swing.JFrame {
+    
+    private static String mostrarPopUp() {
+        // Crear un JOptionPane personalizado
+        String v="NA";
+        Object[] options = {"Básico ($0)", "Medio ($20)", "Premium ($50)", "Cancelar"};
+        int opcion = JOptionPane.showOptionDialog(
+                null,
+                "Selecciona un plan de suscripción:",
+                "Planes de Suscripción",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                options,
+                options[0] // opción predeterminada
+        );
 
+        // Manejar la opción seleccionada
+        switch (opcion) {
+            case 0: // Básico
+                JOptionPane.showMessageDialog(null, "Has seleccionado el plan Básico. ¡No tiene costo!");
+                v="NA";
+                break;
+            case 1: // Medio
+                v=mostrarFormularioPago("Medio", 20);
+                break;
+            case 2: // Premium
+                v=mostrarFormularioPago("Premium", 50);
+                break;
+            default:
+                JOptionPane.showMessageDialog(null, "No se ha seleccionado ningún plan.");
+        }
+        return v;
+    }
+
+    private static String mostrarFormularioPago(String plan, int costo) {
+        // Crear campos de entrada
+        JTextField cuentaField = new JTextField(15);
+        JTextField cvvField = new JTextField(3);
+
+        // Crear el panel para los campos
+        JPanel pagoPanel = new JPanel(new GridLayout(3, 2, 10, 10));
+        pagoPanel.add(new JLabel("Número de cuenta:"));
+        pagoPanel.add(cuentaField);
+        pagoPanel.add(new JLabel("CVV:"));
+        pagoPanel.add(cvvField);
+
+        // Mostrar el pop-up
+        int result = JOptionPane.showConfirmDialog(
+                null,
+                pagoPanel,
+                "Pago del Plan " + plan + " ($" + costo + ")",
+                JOptionPane.OK_CANCEL_OPTION
+        );
+
+        // Procesar la entrada
+        if (result == JOptionPane.OK_OPTION) {
+            String cuenta = cuentaField.getText();
+            String cvv = cvvField.getText();
+            if(usuario.mejorarSuscripcion(cuenta, cvv, Usuario.Suscripcion.valueOf(plan))){
+                JOptionPane.showMessageDialog(null, "¡Pago realizado con éxito para el plan " + plan + "!");
+                return plan;
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Error: Por favor, completa todos los campos.");
+                return "NA";
+            }
+        }
+        return "NA";
+    }
+    
     private static Usuario usuario;
     public UserConfig() {
         initComponents();
@@ -247,7 +319,7 @@ public class UserConfig extends javax.swing.JFrame {
     private void bGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bGuardarActionPerformed
         // TODO add your handling code here:
         String contraseña = new String(jPasswordField1.getPassword());
-        usuario = CreadorDeUsuario.editarUsuario(usuario, tCorreo.getText(), contraseña);
+        usuario.editarCuenta(tCorreo.getText(), contraseña);
         
         JSONObject us = new JSONObject();
 
@@ -258,6 +330,13 @@ public class UserConfig extends javax.swing.JFrame {
         us.put("sexo", usuario.getSexo());
         us.put("id", usuario.getId());
         us.put("tUser", usuario.getTipoUsuario());
+        if (usuario instanceof Tutor) {
+             Tutor tutor = (Tutor) usuario; // Convertir usuario a Tutor
+             us.put("Materia", tutor.getMateria()); 
+         }
+         else{
+             us.put("Materia","Na");
+         }
         
         ArchivoUsuarios.actualizarUsuarioPorCorreo(tCorreo.getText(),us);
         Menu.setUsuario(usuario);
@@ -288,6 +367,15 @@ public class UserConfig extends javax.swing.JFrame {
 
     private void bEditarSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEditarSActionPerformed
         // TODO add your handling code here:
+        String v="NA";
+        v=mostrarPopUp();
+        if (!v.equals("NA")){
+            tRango1.setText(v);
+        }
+        else{
+            tRango1.setText("Estudiante");
+            usuario.mejorarSuscripcion(v, v, Usuario.Suscripcion.Basico);
+        }
     }//GEN-LAST:event_bEditarSActionPerformed
 
     private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed

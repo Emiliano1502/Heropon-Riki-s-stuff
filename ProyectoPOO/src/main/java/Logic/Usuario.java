@@ -107,12 +107,16 @@ public class Usuario implements User {
     Usuarios tipoUsuario;
 
     public enum Usuarios {
-        Estudiante, Profesor, Administrador
+        Estudiante, Tutor, Administrador
+    }
+    
+    public enum Materia{
+        A1, A2, A3, A4, Na
     }
 
     private Suscripcion suscripcion;
 
-    enum Suscripcion {
+    public enum Suscripcion {
         Basico, Medio, Premium
     }
 
@@ -129,7 +133,6 @@ public class Usuario implements User {
         this.suscripcion = Suscripcion.Basico;
         this.sesionActiva = false;
         this.progresos = new ArrayList<>();
-
     }
 
     public String getNombre() {
@@ -161,46 +164,19 @@ public class Usuario implements User {
         System.out.println("Cuenta editada con éxito.");
     }
 
-    public void mejorarSuscripcion(Scanner scanner) {
-        System.out.println("Seleccione la acción que desea realizar:");
-        System.out.println("1. Mejorar mi suscripción a Medio");
-        System.out.println("2. Mejorar mi suscripción a Premium");
-        System.out.println("3. Regresar al plan Básico, tenga en cuenta que perderá todos sus beneficios");
-        int opcionSuscripcion = scanner.nextInt();
-        scanner.nextLine(); // Limpiar el buffer
-
-        Suscripcion nuevaSuscripcion;
-        switch (opcionSuscripcion) {
-            case 1:
-                nuevaSuscripcion = Suscripcion.Medio;
-                break;
-            case 2:
-                nuevaSuscripcion = Suscripcion.Premium;
-                break;
-            case 3:
-                nuevaSuscripcion = Suscripcion.Basico;
-                break;
-            default:
-                System.out.println("Opción no válida. Intente nuevamente.");
-                return;
-        }
-
-        if (nuevaSuscripcion != Suscripcion.Basico) {
-            System.out.println("Ingrese el número de su tarjeta:");
-            String numeroTarjeta = scanner.nextLine();
-            System.out.println("Ingrese la fecha de expiración de su tarjeta de la siguiente forma: (MM/AAAA):");
-            String fechaExpiracion = scanner.nextLine();
-            System.out.println("Ingrese el CVV de su tarjeta:");
-            String cvv = scanner.nextLine();
-
-            if (!validarDatosTarjeta(numeroTarjeta, fechaExpiracion, cvv)) {
-                System.out.println("Datos de tarjeta no válidos. Inténtelo nuevamente.");
-                return;
+    public boolean mejorarSuscripcion(String cuenta, String cvv, Suscripcion s) {
+        if(s!=Suscripcion.Basico){
+            if (validarDatosTarjeta(cuenta, "00/00/00", cvv)){
+                this. suscripcion = s;
+                System.out.println("Su suscripción ha sido actualizada a: " + this.suscripcion + ".");
+                return true;
             }
         }
-
-        suscripcion = nuevaSuscripcion;
-        System.out.println("Su suscripción ha sido actualizada a: " + suscripcion + ".");
+        else{
+            this.suscripcion = s;
+            return true;
+        }
+        return false;
     }
 
     private boolean validarDatosTarjeta(String numeroTarjeta, String fechaExpiracion, String cvv) {
@@ -452,86 +428,5 @@ public class Usuario implements User {
     
     public void agregarProgreso(Progreso<?> progreso) {
         progresos.add(progreso);
-    }
-}
-
-class Tutor extends Usuario {
-
-    private String especialidad;
-    private String disponibilidad;
-    private ArrayList<Evaluacion> evaluaciones;
-
-    public Tutor(String id, String nombre, String correo, String contraseña, String fechaNacimiento, Sexo sexo) {
-        super(id, nombre, correo, contraseña, fechaNacimiento, sexo, Usuarios.Profesor);
-        this.evaluaciones = new ArrayList<>();
-        this.especialidad = "Por Definir";
-        this.disponibilidad = "Por Definir";
-    }
-
-    public void asignarEstudiante() {
-    }
-
-    public void consultarProgreso() {
-    }
-
-    public void agendarSesion() {
-    }
-
-    public void crearEvaluacion(Scanner scanner) {
-        System.out.println("Ingrese el título de la evaluación:");
-        String titulo = scanner.nextLine();
-        System.out.println("Ingrese el puntaje máximo:");
-        int puntajeMaximo = scanner.nextInt();
-        scanner.nextLine();
-
-        ArrayList<String> preguntas = new ArrayList<>();
-        ArrayList<String[]> opciones = new ArrayList<>();
-        ArrayList<Integer> respuestasCorrectas = new ArrayList<>();
-
-        while (true) {
-            System.out.println("Ingrese una pregunta (o 'fin' para terminar):");
-            String pregunta = scanner.nextLine();
-            if (pregunta.equalsIgnoreCase("fin")) {
-                break;
-            }
-
-            preguntas.add(pregunta);
-            String[] opcionesPregunta = new String[3];
-            for (int i = 0; i < 3; i++) {
-                System.out.println("Ingrese la opción " + (char) ('a' + i) + ":");
-                opcionesPregunta[i] = scanner.nextLine();
-            }
-            opciones.add(opcionesPregunta);
-
-            System.out.println("Ingrese el índice de la respuesta correcta (0=a, 1=b, 2=c):");
-            int respuestaCorrecta = scanner.nextInt();
-            scanner.nextLine();
-            respuestasCorrectas.add(respuestaCorrecta);
-        }
-
-        Evaluacion evaluacion = new Evaluacion(titulo, puntajeMaximo, preguntas, opciones, respuestasCorrectas, this.getNombre());
-        evaluaciones.add(evaluacion);
-        System.out.println("Evaluación creada con éxito.");
-    }
-
-    public ArrayList<Evaluacion> getEvaluaciones() {
-        return evaluaciones;
-    }
-}
-
-class Administrador extends Usuario {
-
-    private String especialidad;
-
-    public Administrador(String id, String nombre, String correo, String contraseña, String fechaNacimiento, Sexo sexo) {
-        super(id, nombre, correo, contraseña, fechaNacimiento, sexo, Usuarios.Administrador);
-        this.especialidad = "Por Definir";
-    }
-
-    public static boolean validarContraseñaAdmin(String contraseñaAdmin) {
-        return "admin123".equals(contraseñaAdmin);
-    }
-
-    public void verEstadisticas() {
     }
 }

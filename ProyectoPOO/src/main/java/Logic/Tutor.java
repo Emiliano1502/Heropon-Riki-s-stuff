@@ -1,22 +1,35 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package Logic;
-import java.util.*;
 
-class Tutor extends Usuario {
-    private String especialidad;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Tutor extends Usuario {
+
+    private Usuario.Materia especialidad;
     private String disponibilidad;
     private ArrayList<Evaluacion> evaluaciones;
-    private ArrayList<Progreso<Evaluacion>> progresoEvaluaciones;
 
-    public Tutor(String id, String nombre, String correo, String contraseña, String fechaNacimiento, Sexo sexo) {
-        super(id, nombre, correo, contraseña, fechaNacimiento, sexo, Usuarios.Profesor);
+    public Tutor(String id, String nombre, String correo, String contraseña, String fechaNacimiento, Usuario.Sexo sexo, Usuario.Materia mat) {
+        super(id, nombre, correo, contraseña, fechaNacimiento, sexo, Usuarios.Tutor);
         this.evaluaciones = new ArrayList<>();
-        this.progresoEvaluaciones = new ArrayList<>();
-        this.especialidad = especialidad;
-        this.disponibilidad = disponibilidad;
+        this.especialidad = mat;
+        this.disponibilidad = "Por Definir";
     }
 
-   
-        public void crearEvaluacion(Scanner scanner) {
+    public void asignarEstudiante() {
+    }
+
+    public void consultarProgreso() {
+    }
+
+    public void agendarSesion() {
+    }
+
+    public void crearEvaluacion(Scanner scanner) {
         System.out.println("Ingrese el título de la evaluación:");
         String titulo = scanner.nextLine();
         System.out.println("Ingrese el puntaje máximo:");
@@ -30,7 +43,9 @@ class Tutor extends Usuario {
         while (true) {
             System.out.println("Ingrese una pregunta (o 'fin' para terminar):");
             String pregunta = scanner.nextLine();
-            if (pregunta.equalsIgnoreCase("fin")) break;
+            if (pregunta.equalsIgnoreCase("fin")) {
+                break;
+            }
 
             preguntas.add(pregunta);
             String[] opcionesPregunta = new String[3];
@@ -48,38 +63,13 @@ class Tutor extends Usuario {
 
         Evaluacion evaluacion = new Evaluacion(titulo, puntajeMaximo, preguntas, opciones, respuestasCorrectas, this.getNombre());
         evaluaciones.add(evaluacion);
-
-        // Crear un nuevo progreso asociado a la evaluación
-        Progreso<Evaluacion> progreso = new Progreso<>(titulo, evaluacion);
-        progresoEvaluaciones.add(progreso);
-
-        System.out.println("Evaluación y progreso creado con éxito.");
+        System.out.println("Evaluación creada con éxito.");
     }
-
-    public void consultarProgreso() {
-        System.out.println("Consultando progreso de las evaluaciones:");
-        if (progresoEvaluaciones.isEmpty()) {
-            System.out.println("No hay evaluaciones con progreso registrado.");
-        } else {
-            for (Progreso<Evaluacion> progreso : progresoEvaluaciones) {
-                progreso.consultarProgreso();
-            }
-        }
+        
+    public ArrayList<Evaluacion> getEvaluaciones() {
+        return evaluaciones;
     }
-}
-
-
-class Administrador extends Usuario {
-    private String especialidad;
-
-    public Administrador(String id, String nombre, String correo, String contraseña, String fechaNacimiento, Sexo sexo) {
-        super(id, nombre, correo, contraseña, fechaNacimiento, sexo, Usuarios.Administrador);
-        this.especialidad = "Por Definir";
+    public Usuario.Materia getMateria(){
+        return this.especialidad;
     }
-
-    public static boolean validarContraseñaAdmin(String contraseñaAdmin) {
-        return "admin123".equals(contraseñaAdmin);
-    }
-
-    public void verEstadisticas() {}
 }

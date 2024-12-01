@@ -214,7 +214,7 @@ public class Login extends javax.swing.JFrame {
         if (usuarioJson != null) {
             // Crear el objeto Usuario
             Usuario usuario;
-            usuario = CreadorDeUsuario.crearUsuario(usuarioJson.getString("id"), usuarioJson.getString("nombre"), usuarioJson.getString("correo"), usuarioJson.getString("contraseña"), usuarioJson.getString("fechaNacimiento"), Usuario.Sexo.valueOf(usuarioJson.getString("sexo")), Usuario.Usuarios.valueOf(usuarioJson.getString("tUser")));
+            usuario = CreadorDeUsuario.crearUsuario(usuarioJson.getString("id"), usuarioJson.getString("nombre"), usuarioJson.getString("correo"), usuarioJson.getString("contraseña"), usuarioJson.getString("fechaNacimiento"), Usuario.Sexo.valueOf(usuarioJson.getString("sexo")), Usuario.Usuarios.valueOf(usuarioJson.getString("tUser")), Usuario.Materia.valueOf(usuarioJson.getString("Materia")));
             
             Menu.setUsuario(usuario); // Configura el usuario en la clase Menu
             GUIUtil.abrirVentana(Menu.class, this);

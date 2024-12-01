@@ -5,6 +5,7 @@
 package GUI;
 
 import Logic.ArchivoUsuarios;
+import Logic.Usuario;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import org.json.JSONObject;
@@ -20,6 +21,7 @@ public class SignUp extends javax.swing.JFrame {
      */
     public SignUp() {
         initComponents();
+        jPanel2.setVisible(false);
     }
 
     /**
@@ -45,8 +47,15 @@ public class SignUp extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         vSexo = new javax.swing.JComboBox<>();
         bRegistro = new javax.swing.JButton();
-        tError = new javax.swing.JLabel();
         bRegresar = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        vAlumno = new javax.swing.JComboBox<>();
+        tError = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        Area1 = new javax.swing.JRadioButton();
+        Area2 = new javax.swing.JRadioButton();
+        Area3 = new javax.swing.JRadioButton();
+        Area4 = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -114,9 +123,6 @@ public class SignUp extends javax.swing.JFrame {
             }
         });
 
-        tError.setForeground(new java.awt.Color(255, 0, 51));
-        tError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-
         bRegresar.setBackground(new java.awt.Color(204, 0, 102));
         bRegresar.setFont(new java.awt.Font("Segoe Print", 1, 14)); // NOI18N
         bRegresar.setForeground(new java.awt.Color(255, 255, 255));
@@ -127,24 +133,137 @@ public class SignUp extends javax.swing.JFrame {
             }
         });
 
+        jLabel7.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel7.setText("Grado:");
+
+        vAlumno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Estudiante", "Profesor" }));
+        vAlumno.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                vAlumnoItemStateChanged(evt);
+            }
+        });
+        vAlumno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                vAlumnoActionPerformed(evt);
+            }
+        });
+
+        tError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setEnabled(false);
+
+        Area1.setBackground(new java.awt.Color(255, 255, 255));
+        Area1.setText("Ciencias Físico-Matemáticas e Ingenierías");
+        Area1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                Area1ItemStateChanged(evt);
+            }
+        });
+        Area1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Area1MouseClicked(evt);
+            }
+        });
+        Area1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Area1ActionPerformed(evt);
+            }
+        });
+
+        Area2.setBackground(new java.awt.Color(255, 255, 255));
+        Area2.setText("Ciencias Biológicas, Químicas y de la Salud");
+        Area2.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                Area2ItemStateChanged(evt);
+            }
+        });
+        Area2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Area2MouseClicked(evt);
+            }
+        });
+        Area2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Area2ActionPerformed(evt);
+            }
+        });
+
+        Area3.setBackground(new java.awt.Color(255, 255, 255));
+        Area3.setText("Ciencias Sociales");
+        Area3.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                Area3ItemStateChanged(evt);
+            }
+        });
+        Area3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Area3MouseClicked(evt);
+            }
+        });
+        Area3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Area3ActionPerformed(evt);
+            }
+        });
+
+        Area4.setBackground(new java.awt.Color(255, 255, 255));
+        Area4.setText("Humanidades y de las Artes");
+        Area4.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                Area4ItemStateChanged(evt);
+            }
+        });
+        Area4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Area4MouseClicked(evt);
+            }
+        });
+        Area4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Area4ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(36, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Area4)
+                    .addComponent(Area3)
+                    .addComponent(Area2)
+                    .addComponent(Area1))
+                .addGap(29, 29, 29))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(Area1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Area2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Area3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Area4))
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(tError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(30, 30, 30)
-                                .addComponent(bRegistro)
-                                .addGap(43, 43, 43)
-                                .addComponent(bRegresar))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(26, 26, 26)
+                            .addComponent(tError, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 22, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel2)
@@ -164,19 +283,28 @@ public class SignUp extends javax.swing.JFrame {
                                         .addGap(18, 18, 18)
                                         .addComponent(tFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addGap(126, 126, 126)
-                                        .addComponent(vSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(0, 2, Short.MAX_VALUE)))
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel7)
+                                            .addComponent(jLabel6))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(vAlumno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(vSexo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(bRegistro)
+                        .addGap(48, 48, 48)
+                        .addComponent(bRegresar)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(tNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -201,13 +329,19 @@ public class SignUp extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addComponent(vSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tError, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
+                    .addComponent(vAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tError, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bRegistro)
-                    .addComponent(bRegresar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(39, 39, 39))
+                    .addComponent(bRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -270,7 +404,28 @@ public class SignUp extends javax.swing.JFrame {
         usuario.put("fechaNacimiento", tFecha.getText());
         usuario.put("sexo", vSexo.getSelectedItem());
         usuario.put("id", texto);
-        usuario.put("tUser", "Estudiante");
+        if(vAlumno.getSelectedIndex()==0){
+            usuario.put("tUser", "Estudiante");
+            usuario.put("Materia", "Na");
+        }
+        else{
+            usuario.put("tUser", "Tutor");
+            Usuario.Materia variable = Usuario.Materia.Na;
+            if(Area1.isSelected()){
+                variable = Usuario.Materia.A1;
+            }
+            else if(Area2.isSelected()){
+                variable = Usuario.Materia.A2;
+            }
+            else if(Area3.isSelected()){
+                variable = Usuario.Materia.A3;
+            }
+            else if(Area4.isSelected()){
+                variable = Usuario.Materia.A4;
+            }
+            usuario.put("Materia", variable);
+        }
+        
         if ("".equals(tContra.getText()) || tCorreo.getText().length() < 5) {
             tError.setText("Contraseña no válida.\n Longitud mínima: 5.");
             return;
@@ -284,6 +439,10 @@ public class SignUp extends javax.swing.JFrame {
             tError.setText("Edad inválida.");
             return;
         }
+        else if(vAlumno.getSelectedIndex()==1 && !(Area1.isSelected()||Area2.isSelected()||Area3.isSelected() || Area4.isSelected())){
+            tError.setText("Seleccione una especialidad.");
+            return;
+        }
 
         boolean encontrado = ArchivoUsuarios.buscarUsuarioPorCorreo(tCorreo.getText());
         if (encontrado) {
@@ -291,7 +450,6 @@ public class SignUp extends javax.swing.JFrame {
         } else {
             ArchivoUsuarios.guardarUsuario(usuario);
             System.out.println("Usuario Guardado");
-
         }
 
     }//GEN-LAST:event_bRegistroActionPerformed
@@ -301,8 +459,96 @@ public class SignUp extends javax.swing.JFrame {
         GUIUtil.abrirVentana(Login.class, this);
     }//GEN-LAST:event_bRegresarActionPerformed
 
+    private void vAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vAlumnoActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_vAlumnoActionPerformed
+
+    private void Area1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Area1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Area1ActionPerformed
+
+    private void Area2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Area2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Area2ActionPerformed
+
+    private void Area3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Area3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Area3ActionPerformed
+
+    private void Area4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Area4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Area4ActionPerformed
+
+    private void vAlumnoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_vAlumnoItemStateChanged
+        // TODO add your handling code here:
+        if(vAlumno.getSelectedIndex()==1){
+            jPanel2.setVisible(true);
+        }
+        else{
+            jPanel2.setVisible(false);
+        }
+    }//GEN-LAST:event_vAlumnoItemStateChanged
+
+    private void Area1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_Area1ItemStateChanged
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_Area1ItemStateChanged
+
+    private void Area2ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_Area2ItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Area2ItemStateChanged
+
+    private void Area3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_Area3ItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Area3ItemStateChanged
+
+    private void Area4ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_Area4ItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Area4ItemStateChanged
+
+    private void Area1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Area1MouseClicked
+        // TODO add your handling code here:
+        Area2.setSelected(false);
+        Area3.setSelected(false);
+        Area4.setSelected(false);
+        
+        Area1.setSelected(true);
+    }//GEN-LAST:event_Area1MouseClicked
+
+    private void Area2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Area2MouseClicked
+        // TODO add your handling code here:
+        Area2.setSelected(true);
+        Area3.setSelected(false);
+        Area4.setSelected(false);
+        
+        Area1.setSelected(false);
+    }//GEN-LAST:event_Area2MouseClicked
+
+    private void Area3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Area3MouseClicked
+        // TODO add your handling code here:
+        Area2.setSelected(false);
+        Area3.setSelected(true);
+        Area4.setSelected(false);
+        
+        Area1.setSelected(false);
+    }//GEN-LAST:event_Area3MouseClicked
+
+    private void Area4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Area4MouseClicked
+        // TODO add your handling code here:
+        Area2.setSelected(false);
+        Area3.setSelected(false);
+        Area4.setSelected(true);
+        
+        Area1.setSelected(false);
+    }//GEN-LAST:event_Area4MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton Area1;
+    private javax.swing.JRadioButton Area2;
+    private javax.swing.JRadioButton Area3;
+    private javax.swing.JRadioButton Area4;
     private javax.swing.JButton bRegistro;
     private javax.swing.JButton bRegresar;
     private com.toedter.calendar.JCalendar jCalendar1;
@@ -312,12 +558,15 @@ public class SignUp extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField tContra;
     private javax.swing.JTextField tCorreo;
     private javax.swing.JLabel tError;
     private javax.swing.JTextField tFecha;
     private javax.swing.JTextField tNombre;
+    private javax.swing.JComboBox<String> vAlumno;
     private javax.swing.JComboBox<String> vSexo;
     // End of variables declaration//GEN-END:variables
 }
