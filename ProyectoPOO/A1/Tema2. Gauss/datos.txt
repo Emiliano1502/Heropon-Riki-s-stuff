@@ -1,0 +1,6 @@
+{
+    "titulo": "Tema2. Gauss",
+    "descripcion": "Conocerás al famoso matemático Gauss y sus aportes en las matemáticas actuales.",
+    "temario": "Introducción, Historia, Primeros libros.",
+    "autor": "Creador"
+}

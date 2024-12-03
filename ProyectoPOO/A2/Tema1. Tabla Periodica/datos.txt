@@ -1,0 +1,6 @@
+{
+    "titulo": "La Tabla Periódica",
+    "descripcion": "Conocerás loselementos químicos básicos que están en todo el mundo.",
+    "temario": "Introducción, Gases nobles, Metales, No metales, Metaloides.",
+    "autor": "Creador"
+}

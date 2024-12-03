@@ -1,80 +1,39 @@
 package Logic;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
 
 interface User {
-
     String getId();
-
     String getNombre();
-
     String getCorreo();
-
     String getContraseña();
-
     String getFechaNacimiento();
-
     String getSexo();
-
     String getTipoUsuario();
-
     void crearCuenta();
 }
 
-class Progreso<T> {
-
-    private String titulo;
-    private int progreso; // Porcentaje de progreso (0-100)
-    private T actividad; // Genérico para soportar diferentes tipos de actividades (Evaluación, Curso, etc.)
-    private Date ultimaActividad; // Fecha de la última actividad
-
-    public Progreso(String titulo, T actividad) {
-        this.titulo = titulo;
-        this.actividad = actividad;
-        this.progreso = 0; // Inicia con 0% de progreso
-        this.ultimaActividad = new Date(); // Fecha de creación
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public int getProgreso() {
-        return progreso;
-    }
-
-    public void actualizarProgreso(int progresoAdicional, String n) {
-        if (progresoAdicional < 0) {
-            System.out.println("El progreso adicional no puede ser negativo.");
-            return;
-        }
-        this.progreso = Math.min(100, this.progreso + progresoAdicional); // Evitar que supere el 100%
-        this.ultimaActividad = new Date(); // Actualiza la fecha de la última actividad
-        this.titulo=n;
-        System.out.println("El progreso de la actividad '" + titulo + "' se ha actualizado a " + this.progreso + "%.");
-    }
-
-    public void consultarProgreso() {
-        System.out.println("Actividad: " + titulo);
-        System.out.println("Progreso: " + progreso + "% completado.");
-        System.out.println("Última actividad: " + ultimaActividad);
-    }
-}
-
+//Clase Base Usuario, implementa del a interface User
 public class Usuario implements User {
-
+    //Atributos:
     private String id;
     private String contraseña;
     private String correo;
     private String nombre;
     private String apellido;
     private String fechaNacimiento;
-    public Sexo sexo;
+    private Sexo sexo;
     private int Racha;
     private ArrayList<Progreso<?>> progresos;
 
+    //Sobreescribimos los métodos de la interfaz
     @Override
     public String getId() {
         return this.id;
@@ -97,9 +56,10 @@ public class Usuario implements User {
 
     @Override
     public String getTipoUsuario() {
-        return Usuarios.Estudiante.name();
+        return this.tipoUsuario.name();
     }
 
+    //Enumeraciones
     public enum Sexo {
         Hombre, Mujer, NoEspecificar
     }
@@ -120,8 +80,7 @@ public class Usuario implements User {
         Basico, Medio, Premium
     }
 
-    private boolean sesionActiva;
-
+    //Constructores sobrecargados.
     public Usuario(String id, String nombre, String correo, String contraseña, String fechaNacimiento, Sexo sexo, Usuarios tipoUsuario) {
         this.id = id;
         this.nombre = nombre;
@@ -129,33 +88,43 @@ public class Usuario implements User {
         this.contraseña = contraseña;
         this.fechaNacimiento = fechaNacimiento;
         this.sexo = sexo;
-        this.tipoUsuario = Usuarios.Estudiante;
+        this.tipoUsuario = tipoUsuario;
         this.suscripcion = Suscripcion.Basico;
-        this.sesionActiva = false;
         this.progresos = new ArrayList<>();
     }
-
+    public Usuario (String correo, String contraseña){
+        this.correo=correo;
+        this.contraseña=contraseña;
+    }
+    
+    //Getters:
     public String getNombre() {
         return nombre;
+    }
+    
+    public ArrayList getProgresos() {
+        return progresos;
     }
 
     public String getContraseña() {
         return contraseña;
     }
-
+    
+    //Métodos con ABC de cuenta:
     public void crearCuenta() {
         System.out.println("Cuenta creada exitosamente con los siguientes datos:");
         mostrarDatos();
     }
 
-    public void iniciarSesion(String nombre, String contraseña) {
-        if (this.nombre.equals(nombre) && this.contraseña.equals(contraseña)) {
-            sesionActiva = true;
+    public boolean iniciarSesion(Usuario u) {
+        if (this.equals(u)) {
             System.out.println("Inicio de sesión exitoso.");
             mostrarDatos();
+            return true;
         } else {
             System.out.println("Credenciales incorrectas. Inténtelo de nuevo.");
         }
+        return false;
     }
 
     public void editarCuenta(String nuevoCorreo, String nuevaContraseña) {
@@ -328,18 +297,54 @@ public class Usuario implements User {
         return aciertos;
     }
 
-    public void consultarHistorial(ArrayList<Curso> Cursos) {
+    public List<String> consultarHistorial(ArrayList<Curso> Cursos) {
         System.out.println("Consultando historial del usuario...");
         System.out.println("Racha actual: " + Racha + " días.");
+
+        List<String> historial = new ArrayList<>();
 
         System.out.println("Progreso en actividades:");
         if (progresos.isEmpty()) {
             System.out.println("Aún no se ha registrado progreso en ninguna actividad.");
+            historial.add("Aún no se ha registrado progreso en ninguna actividad.");
         } else {
             for (Progreso<?> progreso : progresos) {
-                progreso.consultarProgreso();
+                String progresoInfo = "Actividad: " + progreso.getTitulo() + " - " + progreso.getProgreso() + "% completado";
+                historial.add(progresoInfo);
+                System.out.println(progresoInfo);
             }
         }
+
+        return historial;
+    }
+    
+    public void mostrarHistorialProgreso() {
+        // Crear el JFrame para mostrar el historial
+        JFrame frameHistorial = new JFrame("Historial de Progreso");
+        frameHistorial.setSize(600, 400);
+        frameHistorial.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        // Verificar si hay progresos registrados
+        if (progresos.isEmpty()) {
+            JLabel mensaje = new JLabel("No hay progreso registrado.", SwingConstants.CENTER);
+            frameHistorial.add(mensaje);
+        } else {
+            // Crear tabla para mostrar el historial
+            String[] columnas = {"Actividad", "Progreso (%)"};
+            Object[][] datos = new Object[progresos.size()][2];
+            for (int i = 0; i < progresos.size(); i++) {
+                Progreso<?> progreso = progresos.get(i);
+                datos[i][0] = progreso.getTitulo();
+                datos[i][1] = progreso.getProgreso();
+            }
+
+            JTable tablaHistorial = new JTable(datos, columnas);
+            JScrollPane scrollPane = new JScrollPane(tablaHistorial);
+            frameHistorial.add(scrollPane);
+        }
+
+        // Hacer visible el frame
+        frameHistorial.setVisible(true);
     }
 
     public void tomarAsesoria(Scanner scanner, ArrayList<Curso> Cursos) {
@@ -421,12 +426,13 @@ public class Usuario implements User {
         System.out.println("Suscripción: " + suscripcion);
     }
     
-    //Redefinición de operadores
+    //Redefinición de operadores (EQUAL)
     public boolean equals(Usuario u){
-        return (this.correo.toUpperCase().equals(u.correo.toUpperCase()) && this.id.equals(u.id));
+        return (this.correo.toUpperCase().equals(u.correo.toUpperCase()) && this.correo.equals(u.correo));
     }
     
     public void agregarProgreso(Progreso<?> progreso) {
         progresos.add(progreso);
+        System.out.println(progresos);
     }
 }

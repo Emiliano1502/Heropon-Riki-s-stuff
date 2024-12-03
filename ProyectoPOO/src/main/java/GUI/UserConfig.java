@@ -59,9 +59,9 @@ public class UserConfig extends javax.swing.JFrame {
 
         // Crear el panel para los campos
         JPanel pagoPanel = new JPanel(new GridLayout(3, 2, 10, 10));
-        pagoPanel.add(new JLabel("Número de cuenta:"));
+        pagoPanel.add(new JLabel("Número de cuenta (16 dígitos):"));
         pagoPanel.add(cuentaField);
-        pagoPanel.add(new JLabel("CVV:"));
+        pagoPanel.add(new JLabel("CVV (3 dígitos):"));
         pagoPanel.add(cvvField);
 
         // Mostrar el pop-up
@@ -90,7 +90,9 @@ public class UserConfig extends javax.swing.JFrame {
     
     private static Usuario usuario;
     public UserConfig() {
+        System.out.println("Llegando con:"+usuario.getTipoUsuario().toString());
         initComponents();
+        tRango.setText(usuario.getTipoUsuario());
     }
     public static void setUsuario(Usuario usuario) {
         UserConfig.usuario = usuario;
@@ -331,13 +333,12 @@ public class UserConfig extends javax.swing.JFrame {
         us.put("id", usuario.getId());
         us.put("tUser", usuario.getTipoUsuario());
         if (usuario instanceof Tutor) {
-             Tutor tutor = (Tutor) usuario; // Convertir usuario a Tutor
-             us.put("Materia", tutor.getMateria()); 
+            Tutor tutor = (Tutor) usuario; // Convertir usuario a Tutor
+            us.put("Materia", tutor.getMateria()); 
          }
          else{
-             us.put("Materia","Na");
+            us.put("Materia","Na");
          }
-        
         ArchivoUsuarios.actualizarUsuarioPorCorreo(tCorreo.getText(),us);
         Menu.setUsuario(usuario);
         GUIUtil.abrirVentana(Menu.class, this);

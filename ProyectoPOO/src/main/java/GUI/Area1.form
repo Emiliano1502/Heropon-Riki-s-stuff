@@ -25,7 +25,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="scroll" max="32767" attributes="0"/>
-                  <Component id="titulo" alignment="0" pref="678" max="32767" attributes="0"/>
+                  <Component id="titulo" alignment="0" pref="625" max="32767" attributes="0"/>
                   <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>

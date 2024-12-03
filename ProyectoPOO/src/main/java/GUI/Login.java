@@ -2,6 +2,7 @@ package GUI;
 
 import Logic.*;
 import java.awt.Color;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import org.json.JSONObject;
@@ -10,6 +11,10 @@ public class Login extends javax.swing.JFrame {
 
     public Login() {
         initComponents();
+        ImageIcon icono = new ImageIcon("icon/visible.png");
+        // Asignar la imagen al botón
+        bContraV.setIcon(icono);
+        bContraV.setText("");
     }
 
     @SuppressWarnings("unchecked")
@@ -203,24 +208,23 @@ public class Login extends javax.swing.JFrame {
         // Validar campos vacíos
         if (correo.isEmpty() || contraseña.isEmpty()) {
             tPass.setText("Usuario o contraseña inválido");
+            return;
         }
 
-        // Buscar el usuario por correo y validar la contraseña
-        JSONObject usuarioJson = ArchivoUsuarios.leerUsuarios().stream()
-                .filter(u -> u.getString("correo").toUpperCase().equals(correo) && u.getString("contraseña").equals(contraseña))
-                .findFirst()
-                .orElse(null);
-
-        if (usuarioJson != null) {
-            // Crear el objeto Usuario
-            Usuario usuario;
-            usuario = CreadorDeUsuario.crearUsuario(usuarioJson.getString("id"), usuarioJson.getString("nombre"), usuarioJson.getString("correo"), usuarioJson.getString("contraseña"), usuarioJson.getString("fechaNacimiento"), Usuario.Sexo.valueOf(usuarioJson.getString("sexo")), Usuario.Usuarios.valueOf(usuarioJson.getString("tUser")), Usuario.Materia.valueOf(usuarioJson.getString("Materia")));
-            
-            Menu.setUsuario(usuario); // Configura el usuario en la clase Menu
-            GUIUtil.abrirVentana(Menu.class, this);
+        Usuario usuarioTemporal = new Usuario(correo, contraseña);
+        Usuario usuarioEncontrado = ArchivoUsuarios.verificarUsuario(usuarioTemporal);
+        System.out.println("\n\n\n\nEnvio de Login con:"+usuarioEncontrado.getTipoUsuario().toString()+"\n\n\n");
+        usuarioEncontrado.mostrarDatos();
+        if (usuarioEncontrado != null) {
+            System.out.println("Usuario encontrado: " + usuarioEncontrado);
         } else {
-            tPass.setText("Usuario o contraseña inválido");
+            System.out.println("Usuario no encontrado.");
+            tPass.setText("Usuario no encontrado.");
+            return;
         }
+            
+        Menu.setUsuario(usuarioEncontrado); // Configura el usuario en la clase Menu
+        GUIUtil.abrirVentana(Menu.class, this);
     }//GEN-LAST:event_bSignInActionPerformed
 
     private void bSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSignUpActionPerformed

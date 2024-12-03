@@ -1,18 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Logic;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
+//Clase derivada de Usuario
 public class Tutor extends Usuario {
-
+    
+    //Atributos:
     private Usuario.Materia especialidad;
     private String disponibilidad;
     private ArrayList<Evaluacion> evaluaciones;
 
+    //Constructor de tutor
     public Tutor(String id, String nombre, String correo, String contraseña, String fechaNacimiento, Usuario.Sexo sexo, Usuario.Materia mat) {
         super(id, nombre, correo, contraseña, fechaNacimiento, sexo, Usuarios.Tutor);
         this.evaluaciones = new ArrayList<>();
@@ -20,6 +19,7 @@ public class Tutor extends Usuario {
         this.disponibilidad = "Por Definir";
     }
 
+    
     public void asignarEstudiante() {
     }
 
@@ -69,6 +69,7 @@ public class Tutor extends Usuario {
     public ArrayList<Evaluacion> getEvaluaciones() {
         return evaluaciones;
     }
+    
     public Usuario.Materia getMateria(){
         return this.especialidad;
     }

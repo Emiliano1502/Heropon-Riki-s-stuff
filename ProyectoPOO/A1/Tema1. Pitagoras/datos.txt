@@ -1,0 +1,6 @@
+{
+    "titulo": "Tema1. Pitagoras",
+    "descripcion": "Entenderás cómo se aplica y funciona el teorema de Pitágoras para triangulos rectángulos.",
+    "temario": "Introducción, Historia, Triangulo Rectángulo, Teorema, Referencias",
+    "autor": "Creador"
+}

@@ -1,0 +1,1 @@
+[{"tUser":"Tutor","fechaNacimiento":"16/11/2006","correo":"YO@GMAIL.COM","id":"y16/11/2006123","sexo":"Hombre","nombre":"yo perez","Materia":"A1","contraseña":"yo"}, {"tUser":"Estudiante","fechaNacimiento":"09/11/2006","correo":"YO2@GMAIL.COM","id":"y09/11/2006123","sexo":"Hombre","nombre":"yo lo","Materia":"Na","contraseña":"yo"}]

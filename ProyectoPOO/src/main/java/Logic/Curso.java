@@ -1,10 +1,11 @@
-
 package Logic;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-class Curso {
+//
+public class Curso {
+    //Atributos:
     private String titulo;
     private String descripcion;
     private String temario;
@@ -13,9 +14,12 @@ class Curso {
     private double calificacionEvaluacion;
     private ArrayList<String> eventos;
     private ArrayList<String> materias; 
-private ArrayList<Evaluacion> evaluaciones;
+    private ArrayList<Evaluacion> evaluaciones;
+    private String autor;
     
-    public Curso(String titulo, String descripcion, String temario) {
+    //Métodos:
+    //Constructores
+    public Curso(String titulo, String descripcion, String temario, String autor) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.temario = temario;
@@ -24,17 +28,19 @@ private ArrayList<Evaluacion> evaluaciones;
         this.eventos = new ArrayList<>();
         this.materias = new ArrayList<>(); 
         this.evaluaciones = new ArrayList<>();
+        this.autor = autor;
     }
 
+    public void agregarEvaluacion(Evaluacion evaluacion) {
+        evaluaciones.add(evaluacion);
+    }
+    
+    //Getters y setters:
     public String gettitulo() {
         return titulo;
     }
 
- public void agregarEvaluacion(Evaluacion evaluacion) {
-        evaluaciones.add(evaluacion);
-    }
-
- public ArrayList<Evaluacion> getEvaluaciones() {
+    public ArrayList<Evaluacion> getEvaluaciones() {
         return evaluaciones;
     }
     
@@ -49,10 +55,6 @@ private ArrayList<Evaluacion> evaluaciones;
     public double getCalificacionEvaluacion() {
         return calificacionEvaluacion;
     }
-    
-    public void agregarProfesor(String profesor) {
-        profesores.add(profesor);
-    }
 
     public void agregarMateria(String materia) {
         materias.add(materia); 
@@ -60,6 +62,10 @@ private ArrayList<Evaluacion> evaluaciones;
 
     public void setCalificacionEvaluacion(double calificacionEvaluacion) {
         this.calificacionEvaluacion = calificacionEvaluacion;
+    }
+    
+    public void agregarProfesor(String profesor) {
+        profesores.add(profesor);
     }
 }
 
@@ -80,6 +86,7 @@ class Evaluacion {
         this.autor = autor;
     }
 
+    //Getters:
     public String getTitulo() {
         return titulo;
     }

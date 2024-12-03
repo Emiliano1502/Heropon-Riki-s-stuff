@@ -1,0 +1,6 @@
+{
+    "titulo": "Tema1. Pentagrama musical",
+    "descripcion": "La base fundamental de la música.",
+    "temario": "Introducción, Historia, Clave de Sol, Referencias.",
+    "autor": "Creador"
+}

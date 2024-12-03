@@ -1,0 +1,6 @@
+{
+    "titulo": "Tema1. Capitalismo.",
+    "descripcion": "Entenderás el principal sistema económico actual.",
+    "temario": "Introducción, Socialismo, Dinero, Referencias.",
+    "autor": "Creador"
+}

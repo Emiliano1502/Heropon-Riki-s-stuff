@@ -1,0 +1,6 @@
+{
+    "titulo": "Tema2. Sistema Economico",
+    "descripcion": "Conocerás los fundamentos básicos del sistema económico.",
+    "temario": "Introducción, Definición, Referencias",
+    "autor": "Creador"
+}

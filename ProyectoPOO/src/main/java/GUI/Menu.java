@@ -8,6 +8,8 @@ import GUI.GUIUtil.CambiaPanel;
 import Logic.ArchivoUsuarios;
 import Logic.Usuario;
 import Logic.Administrador;
+import Logic.Progreso;
+import Logic.Tutor;
 import java.awt.*;
 import javax.swing.*;
 import org.json.JSONObject;
@@ -28,12 +30,18 @@ public class Menu extends javax.swing.JFrame {
         new CambiaPanel(jPanel3,new Area1("A1"));
         
         if(usuario instanceof Administrador){
-            admin.setEnabled(true);
+            admin.setVisible(true);
         }
+        else{
+            admin.setVisible(false);
+        }
+        ImageIcon icono = new ImageIcon("icon/logo.png");
+        jLogo.setIcon(icono);
     }
 
     public static void setUsuario(Usuario usuario) {
         Menu.usuario = usuario;
+        Area1.setUsuario(usuario);
     }
     
     
@@ -59,6 +67,7 @@ public class Menu extends javax.swing.JFrame {
         bA6 = new javax.swing.JButton();
         jLogo = new javax.swing.JLabel();
         bA7 = new javax.swing.JButton();
+        bA8 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -77,7 +86,6 @@ public class Menu extends javax.swing.JFrame {
         admin.setBackground(new java.awt.Color(153, 255, 153));
         admin.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         admin.setText("Admin");
-        admin.setEnabled(false);
         admin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 adminActionPerformed(evt);
@@ -91,7 +99,7 @@ public class Menu extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(lUser)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 388, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 450, Short.MAX_VALUE)
                 .addComponent(admin)
                 .addGap(27, 27, 27))
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -162,7 +170,7 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
-        jLogo.setText("LOGOTIPO");
+        jLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         bA7.setFont(new java.awt.Font("Ravenscroft", 0, 36)); // NOI18N
         bA7.setForeground(new java.awt.Color(204, 51, 0));
@@ -173,29 +181,35 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
+        bA8.setFont(new java.awt.Font("Ravenscroft", 0, 36)); // NOI18N
+        bA8.setForeground(new java.awt.Color(102, 51, 0));
+        bA8.setText("Historial");
+        bA8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bA8ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jMenu)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(15, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(bA7, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bA6, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bA4, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bA3, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bA2, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bA5, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(bA8, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+                    .addComponent(bA7, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+                    .addComponent(bA6, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+                    .addComponent(bA4, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+                    .addComponent(bA3, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+                    .addComponent(bA2, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+                    .addComponent(bA5, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+                    .addComponent(jLogo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(14, 14, 14))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(jMenu))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(54, 54, 54)
-                        .addComponent(jLogo)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -212,10 +226,12 @@ public class Menu extends javax.swing.JFrame {
                 .addComponent(bA4, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bA6, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addComponent(bA8, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bA7, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(75, 75, 75)
-                .addComponent(jLogo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -225,16 +241,14 @@ public class Menu extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -272,6 +286,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void bA7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bA7ActionPerformed
         // TODO add your handling code here:
+        System.out.println("Llegué con: " + usuario.getTipoUsuario().toString());
         JSONObject usuarios = new JSONObject();
 
         usuarios.put("contraseña", usuario.getContraseña());
@@ -281,6 +296,15 @@ public class Menu extends javax.swing.JFrame {
         usuarios.put("sexo", usuario.getSexo());
         usuarios.put("id", usuario.getId());
         usuarios.put("tUser", usuario.getTipoUsuario());
+        if (usuario instanceof Tutor) {
+            Tutor tutor = (Tutor) usuario; // Convertir usuario a Tutor
+            usuarios.put("Materia", tutor.getMateria()); 
+            System.out.println("Materia del PROFE!");
+         }
+         else{
+            System.out.println("Materia como NA!");
+            usuarios.put("Materia","Na");
+         }
 
         // Busca si el usuario ya existe por correo
         boolean encontrado = ArchivoUsuarios.buscarUsuarioPorCorreo(usuario.getCorreo());
@@ -302,9 +326,19 @@ public class Menu extends javax.swing.JFrame {
 
     private void adminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminActionPerformed
         // TODO add your handling code here:
-        admin.setText("Usuario");
+        if(admin.getText().equals("Usuario")){
+            admin.setText("Admin");
+        }
+        else{
+            admin.setText("Usuario");
+        }
         
     }//GEN-LAST:event_adminActionPerformed
+
+    private void bA8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bA8ActionPerformed
+        // TODO add your handling code here:
+        usuario.mostrarHistorialProgreso();
+    }//GEN-LAST:event_bA8ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -318,6 +352,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JButton bA5;
     private javax.swing.JButton bA6;
     private javax.swing.JButton bA7;
+    private javax.swing.JButton bA8;
     private javax.swing.JLabel jLogo;
     private javax.swing.JLabel jMenu;
     private javax.swing.JPanel jPanel1;

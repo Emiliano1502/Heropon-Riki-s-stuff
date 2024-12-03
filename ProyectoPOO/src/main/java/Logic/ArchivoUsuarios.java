@@ -1,5 +1,7 @@
+//Clase de utilidades para el sistema.
 package Logic;
 
+import Logic.Usuario;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.*;
@@ -9,9 +11,9 @@ import java.util.List;
 public class ArchivoUsuarios {
 
     private static final String FILE_NAME = "BD.txt";
-
-    // Método para leer los usuarios desde el archivo
+    
     public static List<JSONObject> leerUsuarios() {
+        //Crea una lista de usuarios en formato JSON
         List<JSONObject> usuarios = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(FILE_NAME))) {
@@ -36,9 +38,72 @@ public class ArchivoUsuarios {
 
         return usuarios;
     }
+    
+    // Método para leer los usuarios desde el archivo
+    public static List<Usuario> leerUsuario() {
+        //Regresa una lista de Usuarios según la base de datos
+        List<Usuario> usuarios = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(FILE_NAME))) {
+            StringBuilder sb = new StringBuilder();
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+
+            JSONArray jsonArray = new JSONArray(sb.toString());
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                // Crear instancias de Usuario desde JSON
+                String correo = jsonObject.getString("correo");
+                String contraseña = jsonObject.getString("contraseña");
+                Usuario usuario;
+                
+                usuario = CreadorDeUsuario.crearUsuario(jsonObject.getString("id"),jsonObject.getString("nombre"), correo, contraseña, jsonObject.getString("fechaNacimiento"), Usuario.Sexo.valueOf(jsonObject.getString("sexo")), Usuario.Usuarios.valueOf(jsonObject.getString("tUser")), Usuario.Materia.valueOf(jsonObject.getString("Materia")));
+                usuarios.add(usuario);
+                System.out.println("Usuario: "+usuario.getTipoUsuario().toString() + "| VS |" + jsonObject.getString("tUser"));
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Archivo no encontrado, creando uno nuevo...");
+            guardarUsuarios(new JSONArray());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return usuarios;
+    }
+
+    // Verificar si un usuario temporal coincide con algún usuario en la BD
+    public static Usuario verificarUsuario(Usuario usuarioTemporal) {
+        //Verficia si el usuario existe.
+        List<Usuario> usuarios = leerUsuario();
+
+        Usuario u;
+        for (Usuario usuario : usuarios) {
+            if (usuario.iniciarSesion(usuarioTemporal)) {
+                Usuario.Materia m;
+                if(usuario instanceof Tutor){
+                    m=((Tutor) usuario).getMateria();
+                }
+                else{
+                    m=Usuario.Materia.Na;
+                }
+                System.out.print("\n\nEL usuario es: "+usuario.getTipoUsuario().toString()+"\n\n\n");
+                u = CreadorDeUsuario.crearUsuario(usuario.getId(),usuario.getNombre(),usuario.getCorreo(), usuario.getContraseña(), usuario.getFechaNacimiento(), Usuario.Sexo.valueOf(usuario.getSexo()), Usuario.Usuarios.valueOf(usuario.getTipoUsuario()), m);
+                
+                return usuario; // Devuelve el usuario encontrado
+            }
+        }
+
+        return null; // Usuario no encontrado
+    }
 
     // Método para guardar los usuarios en el archivo
     public static void guardarUsuarios(JSONArray usuarios) {
+        //Guarda los usuarios en lista en JSON
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_NAME))) {
             bw.write(usuarios.toString());
         } catch (IOException e) {
@@ -48,6 +113,7 @@ public class ArchivoUsuarios {
 
     // Método para agregar un usuario
     public static void guardarUsuario(JSONObject nuevoUsuario) {
+        //Guarda un usuario individual en JSON
         List<JSONObject> usuarios = leerUsuarios();
         usuarios.add(nuevoUsuario);
 
@@ -99,7 +165,6 @@ public class ArchivoUsuarios {
     public static boolean actualizarUsuarioPorCorreo(String correo, JSONObject usuarioActualizado) {
         // Paso 1: Crear el archivo temporal "prueba.txt"
         File archivoTemporal = new File("prueba.txt");
-
         try {
             // Leer los usuarios actuales desde el archivo BD.txt
             List<JSONObject> usuarios = leerUsuarios();
